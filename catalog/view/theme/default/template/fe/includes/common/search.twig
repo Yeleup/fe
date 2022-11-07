@@ -1,0 +1,134 @@
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="input-group">
+            <input id="homeSearchInput" type="text" class="form-control" style="border-right: none;" placeholder="ПОИСК ПО VIN И НОМЕРУ ЗАПЧАСТИ, ПРИМЕР: 0756985">
+            <button id="homeSearchBtn" class="input-group-text" style="background-color: white;">
+                <i class="fas fa-search" style="color: #3A659F;"></i>
+            </button>
+            <script>
+                $( document ).ready(function() {
+                    $('#homeSearchBtn').on('click', function() {
+                        let url = 'index.php?route=fe/pages/list_units';
+                        if ($('#homeSearchInput').val() !== '') {
+                            $.ajax('index.php?route=fe/api/common/home_search&search=' + $('#homeSearchInput').val())
+                                .done((res) => {
+                                    let redirect = res.data.redirect;
+                                    $( location ).attr('href', redirect);
+                                })
+                                .fail(() => {
+                                    console.log('fail.');
+                                });
+                        }
+
+                    });
+
+                    $('#homeSearchInput').keydown(function(event) {
+                        if (event.keyCode === 13) {
+                            $('#homeSearchBtn').trigger('click');
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row gx-0 row-cols-1 row-cols-md-4">
+            <div class="col">
+                <select class="form-select" name="catalog" id="catalogSelect">
+                    <option value="none" selected>Все марки</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <select class="form-select" name="ssd" id="modelSelect" disabled>
+                    <option value="none" selected>Модель</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <select class="form-select" name="ssd" id="yearSelect" disabled>
+                    <option value="none" selected>Год</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <input type="submit" id="laximoSearchBtn" class="btn btn-primary w-100" value="Найти">
+            </div>
+        </div>
+
+        <script>
+        $(document).ready(() => {
+            let catSel = $('#catalogSelect');
+            let modelSel = $('#modelSelect');
+            let yearSel = $('#yearSelect');
+            let searchBtn = $('#laximoSearchBtn');
+
+            modelSel.prop('disabled', true);
+            yearSel.prop('disabled', true);
+
+            let catalog_id = -1;
+            let model = '';
+            let vehicle_id = 'none';
+
+            $.ajax('index.php?route=fe/api/catremote/brands')
+                .done((res) => {
+                    catSel.empty();
+                    catSel.append(`<option value="none" selected>Каталог</option>`);
+                    res.forEach(e => {
+                        catSel.append(`<option value="${e.id}">${e.name}</option>`);
+                    })
+                });
+
+            catSel.on('change', () => {
+                modelSel.empty();
+                yearSel.empty();
+
+                if (catSel.val() == 'none') {
+                    modelSel.prop('disabled', true);
+                    yearSel.prop('disabled', true);
+                } else {
+                    catalog_id = catSel.val();
+                    $.ajax(`index.php?route=fe/api/catremote/models&brand_id=${catalog_id}`)
+                        .done((res) => {
+                            modelSel.prop('disabled', false);
+                            yearSel.prop('disabled', true);
+
+                            modelSel.append(`<option value="none" selected>Модель</option>`);
+                            res.forEach(e => {
+                                modelSel.append(`<option value="${e.id}">${e.name}</option>`);
+                            });
+                        });
+                }
+            });
+
+            modelSel.on('change', () => {
+                yearSel.empty();
+
+                if (modelSel.val() == 'none') {
+                    yearSel.prop('disabled', true);
+                } else {
+                    model = modelSel.val();
+                    $.ajax(`index.php?route=fe/api/catremote/years&model_id=${model}`)
+                        .done((res) => {
+                            yearSel.prop('disabled', false);
+
+                            yearSel.append('<option value="none">Год</option>');
+                            res.forEach(e => {
+                                yearSel.append(`<option value="${e.id}">(${e.displayvalue}) ${e.name}</option>`);
+                            });
+                        });
+                }
+            });
+
+            searchBtn.on('click', () => {
+                vehicle_id = yearSel.val();
+
+                if (vehicle_id != 'none') {
+                    $(location).attr('href', `index.php?route=fe/pages/list_units&vehicle_id=${vehicle_id}`);
+                }
+            });
+        });
+        </script>
+    </div>
+</div>

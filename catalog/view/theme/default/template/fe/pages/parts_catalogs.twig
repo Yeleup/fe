@@ -1,0 +1,17 @@
+{{ header }}
+
+<main style="margin: 50px 0; min-height: 75vh;">
+    {% if show_parts_catalogs %}
+        <div id="parts-catalog"
+        data-key="TWS-D117AD4A-6611-4CD7-9742-CFC8C1EEF593"
+        data-back-url="/index.php?route=fe/pages/list_details&search={article}"
+        data-language="ru"
+        ></div>
+
+        <script type="text/javascript" src="https://gui.parts-catalogs.com/v2/parts-catalogs.js"></script>
+    {% else %}
+        <h4 class="text-center">Для неограниченного использования каталогов, пожалуйста зарегистрируйтесь на сайте.</h4>
+    {% endif %}
+</main>
+
+{{ footer }}

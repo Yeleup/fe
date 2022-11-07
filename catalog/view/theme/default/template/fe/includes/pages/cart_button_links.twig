@@ -1,0 +1,32 @@
+<div class="my-3">
+    <a class="btn py-2 px-3 mx-2 fe-bin-top-button" href="{{ link_cart }}">
+        <div class="row">
+            <div class="col">
+                Корзина
+            </div>
+            <div class="col fe-bin-top-button__right">
+                <span id="feCartButtonLinksCartCounter">0</span>
+                <script type="text/javascript">
+                    $(document).ready(() => {
+                        feCartUpdatedEventEmitter.subscribe((count) => {
+                            $('#feCartButtonLinksCartCounter').html(count);
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </a>
+
+    {% if customer_id %}
+    <a class="btn py-2 px-3 mx-2 fe-bin-top-button" href="{{ link_cart_kept }}">
+        <div class="row">
+            <div class="col">
+                Отложенное
+            </div>
+            <div class="col fe-bin-top-button__right">
+                {{ cart_kept_count }}
+            </div>
+        </div>
+    </a>
+    {% endif %}
+</div>

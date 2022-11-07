@@ -1,0 +1,167 @@
+{{ header }}
+
+<main class="">
+    <div class="container mt-3">
+
+        {{ cart_button_links }}
+
+        <div class="row">
+            <div class="col">
+                <div class="row fe-table-header mx-auto">
+                    {% set tb_header = [
+                        'Марка, группы',
+                        'Код',
+                        'Название',
+                        'Наличие',
+                        'Цена',
+                        'Колличество',
+                        'Сумма',
+                    ] %}
+                    {% for i in tb_header %}
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            {{ i }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% for item in items %}
+                <div class="fe-bg-light-blue my-3 p-2" id="table-row-id-{{ item['id'] }}">
+                    <div class="text-end">
+                        <button class="btn" id="btn-cart-remove-{{ item['id'] }}">
+                            <img src="image/catalog/fe/pages/bin/cross.svg" alt="">
+                        </button>
+
+                        <script>
+                        $(document).ready(() => {
+                            let id = '{{ item['id'] }}';
+                            let btn = `#btn-cart-remove-${id}`;
+                            let row = `#table-row-id-${id}`;
+                            $(btn).on('click', () => {
+                                $.ajax({
+                                    url: 'index.php?route=fe/api/checkout/fe_cart/remove',
+                                    method: 'POST',
+                                    data: {
+                                        id: id
+                                    }
+                                })
+                                    .done(res => {
+                                        console.log(res);
+                                        $(row).animate({
+                                            height: "toggle",
+                                            margin: "0",
+                                            paddingTop: "0",
+                                            paddingBottom: "0"
+                                        }, 600, () => {
+                                            $(row).remove();
+                                        });
+                                    });
+                            });
+                        });
+                        </script>
+                    </div>
+
+                    <div class="row fe-table-data-row mb-3 gx-0 mx-auto">
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                {{ item['brand'] }}
+                            </div>
+                        </div>
+
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                {{ item['crosscode'] }}
+                            </div>
+                        </div>
+
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                {{ item['name'] }}
+                            </div>
+                        </div>
+
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                <img src="image/catalog/fe/pages/bin/icon_check.svg" alt="">
+                                В наличии
+                            </div>
+                        </div>
+
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                <span>{{ item['price']|number_format }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                {{ item['cart_quantity'] }}
+                            </div>
+                        </div>
+
+                        <div class="col d-flex py-2">
+                            <div class="d-inline-block text-center m-auto">
+                                <span>{{ (item['price'] * item['cart_quantity'])|number_format }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button class="btn fe-btn-bordered" id="btnReturnToCart{{ item.id }}">
+                            Вернуть в корзину
+                        </button>
+
+                        <script type="text/javascript">
+                            $(document).ready(() => {
+                                $('#btnReturnToCart{{ item.id }}').on('click', () => {
+                                    let productId = '{{ item.product_id }}';
+                                    let quantity = '{{ item.cart_quantity }}';
+                                    $.ajax({
+                                        url: 'index.php?route=checkout/cart/add',
+                                        method: 'POST',
+                                        data: {
+                                            product_id: productId,
+                                            quantity: quantity
+                                        }
+                                    })
+                                    .done(res => {
+                                        $.ajax({
+                                            url: '{{ link_delete_fe_cart }}',
+                                            method: 'POST',
+                                            data: {
+                                                id: '{{ item.id }}'
+                                            }
+                                        });
+                                        feCartUpdatedEventEmitter.emit();
+                                        let id = '{{ item['id'] }}';
+                                        let row = `#table-row-id-${id}`;
+                                        $(row).animate({
+                                            height: "toggle",
+                                            margin: "0",
+                                            paddingTop: "0",
+                                            paddingBottom: "0"
+                                        }, 600, () => {
+                                            $(row).remove();
+                                        });
+                                    });
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-3"></div>
+
+            <div class="py-5"></div>
+
+        </div>
+
+    </div>
+
+    {{ callback }}
+</main>
+
+{{ footer }}

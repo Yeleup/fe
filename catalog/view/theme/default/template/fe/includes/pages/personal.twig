@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row row-cols-1 row-cols-lg-3">
+
+        <div class="col">
+
+            <div class="my-4">
+                <label for="lastName" class="form-text">Фамилия<span class="text-danger">*</span></label>
+                <input id="lastName" name="lastName" class="form-control rounded-0" type="text" placeholder="Введите фамилию" value="{{ customer['lastname'] }}" required>
+            </div>
+            <div class="my-4">
+                <label for="firstName" class="form-text">Имя<span class="text-danger">*</span></label>
+                <input id="firstName" name="firstName" class="form-control rounded-0" type="text" placeholder="Введите имя" value="{{ customer['firstname'] }}" required>
+            </div>
+            <div class="my-4">
+                <label for="middleName" class="form-text">Отчество</label>
+                <input id="middleName" name="middleName" class="form-control rounded-0" type="text" placeholder="Введите отчество">
+            </div>
+
+        </div>
+
+        <div class="col">
+
+            <div class="my-4">
+                <label for="email" class="form-text">Email <span class="text-danger">*</span> </label>
+                <input id="email" name="email" class="form-control rounded-0" type="email" placeholder="Введите email" value="{{ customer['email'] }}" required>
+            </div>
+            <div class="my-4">
+                <label for="phone" class="form-text">Контактный телефон <span class="text-danger">*</span> </label>
+                <input id="phone" name="phone" class="form-control rounded-0" type="text" placeholder="Введите номер телефон" value="{{ customer['telephone'] }}" required>
+            </div>
+            <div class="my-4">
+                <label for="company" class="form-text">Название компании</label>
+                <input id="company" name="company" class="form-control rounded-0" type="text" placeholder="Введите название компании">
+            </div>
+
+        </div>
+
+        <div class="col">
+
+            <div class="my-4">
+                <label for="registrationType" class="form-text">Тип регистрации</label>
+                <select id="registrationType" name="registrationType" class="form-select rounded-0" style="background-image: none;" required>
+                    {% for status in status_list %}
+                        <option value="{{ status.name }}">{{ status.name_display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row justify-content-end p-4">
+        <div class="col-3">
+            <button class="btn fe-btn-bordered w-100" id="checkoutBtnPersonalNext" type="button" name="button">Далее</button>
+            <script type="text/javascript">
+                $(document).ready(() => {
+                    $('#checkoutBtnPersonalNext').click(() => {
+                        new bootstrap.Tab($('#pills-requisites-tab')).show();
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>

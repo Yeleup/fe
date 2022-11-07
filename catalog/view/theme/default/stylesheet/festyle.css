@@ -1,0 +1,270 @@
+.dev-red {
+    background-color: red;
+}
+
+.dev-green {
+    background-color: green;
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+}
+
+header .header-auth-buttons a {
+    transition: .3s;
+}
+
+header .header-auth-buttons a {
+    background-color: #36a4ee;
+}
+
+header .fe-header-cart-icon {
+    transition: .3s;
+    color: #0575C0;
+    border-radius: 0;
+}
+
+header .fe-header-cart-icon:hover {
+    color: #ffffff;
+    background-color: #0575C0;
+}
+
+header .fe-header-cart-icon > i {
+    font-size: 1.5em;
+}
+
+header .fe-header-cart-icon > span {
+    font-weight: 600;
+}
+
+.about-card-container {
+    height: 300px;
+}
+
+.about-card-head {
+    background-color: #2C5183;
+    color: white;
+    height: 15%;
+}
+
+.about-card-body {
+    margin-top: 3px;
+    background-color: white;
+    opacity: .8;
+    height: 85%;
+    color: #2C5183;
+    font-weight: bold;
+}
+
+.about-description {
+    padding: 30px;
+}
+
+.contacts-text-container > div {
+    padding: 10px 0;
+}
+
+.cooperation-yellow-bg-icons {
+    border-radius: 50%;
+    background-color: #FFE767;
+    width: 100px;
+    height: 100px;
+}
+
+footer {
+    background-color: #333333;
+}
+
+footer * {
+    color: white;
+}
+
+footer ul {
+    list-style: none;
+}
+
+footer ul a {
+    text-decoration: none;
+}
+
+footer ul li {
+    padding: 3px 0;
+}
+
+.footer-ul-links a {
+    cursor: pointer;
+    transition: .2s;
+}
+
+.footer-ul-links a:hover {
+    color: #0575C0;
+}
+
+.modals-container * {
+    color: black;
+}
+
+.social-icon-container {
+    padding-top: 20px;
+}
+
+.social-icon-container i {
+    color: #3A659F;
+    font-size: 2em;
+    transition: .3s;
+}
+
+.social-icon-container i:hover {
+    color: #5b90d6;
+}
+
+.fe-goods-btn-inc {
+    transition: .3s;
+    cursor: pointer;
+}
+
+.fe-goods-btn-inc:hover {
+    /* background-color: #0575C0; */
+    opacity: .3;
+}
+
+.fe-bin-top-button {
+    border: 1px solid #2C5183;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.fe-bin-top-button:hover * {
+    color: #5d8fd1;
+}
+
+.fe-bin-top-button__right {
+    border-left: 1px solid #2C5183;
+}
+
+.fe-bin-top-button a {
+  color: #2C5183;
+  text-decoration: none;
+}
+
+.fe-table-header {
+    border-top: 1px solid #3A659F;
+    border-bottom: 1px solid #3A659F;
+}
+
+.fe-table-data-row > div {
+    border-left: 1px solid #B9BCC0;
+}
+
+.fe-table-data-row > div:first-child {
+    border-left: none;
+}
+
+.fe-bg-light-blue {
+    background-color: #F6FAFF;
+}
+
+.fe-btn-bordered {
+    border: 1px solid #0575C0;
+    border-radius: 0;
+    transition: .2s;
+}
+
+.fe-btn-bordered:hover {
+    color: #5d8fd1;
+}
+
+.fe-btn {
+    transition: .2s;
+    border-radius: 0;
+    background-color: #0575C0;
+    color: white;
+    font-size: 1.2em;
+}
+
+.fe-btn:hover {
+    background-color: #4ba9e7;
+    color: white;
+}
+
+.fe-modal-body {
+    font-size: 0.9em;
+}
+
+.fe-modal-body > div {
+    padding: 1rem 0;
+}
+
+.fe-modal-body > div > h5 {
+    font-weight: 800;
+    font-size: .9rem;
+}
+
+.fe-modal-body > div > div {
+    white-space: pre-line;
+}
+
+/* .fe-modal-bonus-container {
+    background: center url('image/catalog/fe/modals/bonus/bg.png');
+} */
+
+.fe-modal-bonus-header {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: #2C5183;
+}
+
+.fe-modal-bonus-button {
+    border: 1px solid #FFE767;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: none;
+    color: white;
+    text-transform: uppercase;
+    padding: .5em 2em;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.fe-modal-bonus-button:hover {
+    background: #FFE767;
+    color: black;
+}
+
+.fe .pagination {
+    justify-content: flex-end;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.fe .pagination li {
+  border: 1px solid #0575C0;
+  background-color: transparent;
+  margin: .2em;
+}
+
+.fe .pagination a, .fe .pagination span {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: black;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.fe .pagination a:hover {
+    color: #5d8fd1;
+}
+
+.fe .pagination .active span {
+    background-color: #0b5ed7;
+    color: white;
+}

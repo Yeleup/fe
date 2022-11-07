@@ -1,0 +1,164 @@
+{% if fe_customer %}
+<div id="tab-fe-customer" class="tab-pane">
+    <fieldset>
+        <legend>Доп. Информация</legend>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-client-category">Категория Клиента</label>
+            <div class="col-sm-10">
+                <select id="input-client-category" class="form-control" name="client_category_id">
+                    {% for option in client_category_options %}
+                    <option value="{{ option.id }}" {% if option.id == fe_customer.client_category_id %} selected {% endif %}>
+                        {{ option.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-reg-type">Тип Регистрации</label>
+            <div class="col-sm-10">
+                <select id="input-reg-type" class="form-control" name="reg_type">
+                    {% for option in reg_type_options %}
+                    <option value="{{ option.name }}" {% if option.id == fe_customer.reg_type %} selected {% endif %}>
+                        {{ option.name_display }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-customer-type">Тип Пользователя</label>
+            <div class="col-sm-10">
+                <select id="input-customer-type" class="form-control" name="customer_type_id">
+                    <option value="0" {% if not fe_customer.customer_type_id %} selected {% endif %}>
+                        --
+                    </option>
+                    {% for option in customer_type_options %}
+                    <option value="{{ option.id }}" {% if option.id == fe_customer.customer_type_id %} selected {% endif %}>
+                        {{ option.display }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-fe-customer-status">Статус Клиента</label>
+            <div class="col-sm-10">
+                <select id="input-fe-customer-status" class="form-control" name="fe_customer_status">
+                    {% for option in status_options %}
+                    <option value="{{ option.name }}" {% if option.id == fe_customer.status %} selected {% endif %}>
+                        {{ option.name_display }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-fe-responsibles">Ответственные</label>
+            <div class="col-sm-10">
+                <select id="input-fe-responsibles" class="form-control" name="responsible_id">
+                    <option value="0" {% if not fe_customer.responsible_id %} selected {% endif %}>
+                        --
+                    </option>
+                    {% for option in responsibles_options %}
+                    <option value="{{ option.id }}" {% if option.id == fe_customer.responsible_id %} selected {% endif %}>
+                        {{ option.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-iin">ИИН/БИН</label>
+            <div class="col-sm-10">
+                <input type="text" id="input-iin" class="form-control" name="iin" placeholder="ИИН/БИН" value="{{ fe_customer.iin }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-company-name">Название Компании</label>
+            <div class="col-sm-10">
+                <input type="text" id="input-company-name" class="form-control" name="company_name" placeholder="Название Компании" value="{{ fe_customer.company_name }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-company-name-full">Полное Название Компании</label>
+            <div class="col-sm-10">
+                <input type="text" id="input-company-name-full" class="form-control" name="company_name_full" placeholder="Полное Название Компании" value="{{ fe_customer.company_name_full }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-official-address">Официальный Адрес</label>
+            <div class="col-sm-10">
+                <input type="text" id="input-official-address" class="form-control" name="official_address" placeholder="Официальный Адрес" value="{{ fe_customer.official_address }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-address">Адрес</label>
+            <div class="col-sm-10">
+                <input type="text" id="input-address" class="form-control" name="address" placeholder="Адрес" value="{{ fe_customer.address }}">
+            </div>
+        </div>
+
+        <!-- Add new requisite -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-new-requisite-address">Реквизиты</label>
+            <div class="col-sm-5">
+                <input type="text" id="input-new-requisite-address" class="form-control" name="new_requisite[address]" placeholder="Реквизиты">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="input-new-requisite-guid" class="form-control" name="new_requisite[guid]" placeholder="GUID">
+            </div>
+
+            <!-- <div class="col-sm-1">
+                <button type="button" id="input-new-requisite-btn" class="btn btn-primary" name="button" data-toggle="tooltip" data-original-title="Генерировать GUID">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <script type="text/javascript">
+                    $(document).ready(() => {
+                        let input = $('#input-new-requisite-guid');
+                        let btn = $('#input-new-requisite-btn');
+
+                        btn.on('click', () => {
+                            let result = $.ajax('{{ link_uuid_generate }}')
+                                .success((res) => {
+                                    input.val(res.uuid);
+                                });
+                        });
+                    });
+                </script>
+            </div> -->
+        </div>
+
+        {% for requisite in requisites %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-new-requisite-address">Реквизит ID {{ requisite.id }}</label>
+
+            <div class="col-sm-5">
+                <input type="text" id="input-requisite-address-{{ requisite.id }}" class="form-control" name="requisites[{{ requisite.id }}][address]" placeholder="Реквизит" value="{{ requisite.address }}">
+            </div>
+
+            <div class="col-sm-4">
+                <input type="text" id="input-requisite-guid-{{ requisite.id }}" class="form-control" name="requisites[{{ requisite.id }}][guid]" placeholder="GUID" value="{{ requisite.guid }}">
+            </div>
+
+            <div class="col-sm-1 form-group form-check form-switch">
+
+                <input class="form-check-input" type="checkbox" name="requisites[{{ requisite.id }}][delete]" value="true">
+                <label class="form-check-label">Удалить</label>
+            </div>
+        </div>
+        {% endfor %}
+
+    </fieldset>
+</div>
+{% endif %}

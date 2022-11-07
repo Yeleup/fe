@@ -1,0 +1,79 @@
+{{ deps }}
+<div class="container-fluid row">
+
+    <div class="laximo-container col-3" id="laximoListCategories">
+        <ul class="list-group list-group-flush">
+
+        </ul>
+    </div>
+
+    <div class="laximo-container col" id="laximoListUnits">
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            let laximoListCategoriesContainer = $('#laximoListCategories ul');
+            let laximoListUnitsContainer = $('#laximoListUnits');
+            let urlListCategories = atob('{{ link_list_categories }}');
+            let visToggleTime = 500;
+
+            let listUnits = function(url) {
+                laximoListUnitsContainer.hide(visToggleTime);
+                $.ajax(url)
+                    .done(res => {
+                        console.log(res);
+                        laximoListUnitsContainer.empty();
+                        res.row.forEach((item, i) => {
+                            let imageurl = item['@attributes'].imageurl.replace('%size%', 'source');
+                            let template = `
+                            <div class="card my-3 w-100" style="width: 18rem;">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="${imageurl}" class="img-fluid" alt="...">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${item['@attributes'].name}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-link float-end" href=${item._links.DetailsView}>Найти детали</a>
+                                </div>
+                            </div>
+                            `;
+
+                            laximoListUnitsContainer.append(template);
+                        });
+
+                    })
+                    .always(() => {
+                        laximoListUnitsContainer.show(visToggleTime);
+                    });
+            };
+
+            $.ajax(urlListCategories)
+                .done(res => {
+                    res.row.forEach((item, i) => {
+                        let template = $(`
+                            <li class="list-group-item">
+                                <button class="w-100 btn btn-link">
+                                    ${item['@attributes'].name}
+                                </button>
+                            </li>
+                        `);
+
+                        template.find('button').on('click', () => {
+                            listUnits(item._links.ListUnits);
+                        });
+
+                        laximoListCategoriesContainer.append(template);
+                    });
+
+                });
+
+        });
+    </script>
+
+</div>

@@ -1,0 +1,63 @@
+<div class="modal fade" id="modalLoginAlt{{ login_option | capitalize }}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <div class="container">
+                    <div class="text-end p-1">
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+    
+                    <div class="text-center">
+                        <span class="btn rounded-0 fw-bolder w-75 text-uppercase" style="background: #0575C0; color: white; cursor: default;">
+                            Войти в аккаунт
+                        </span>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="#" {% if login_option is not same as('yandex') %}
+                            data-bs-toggle="modal" data-bs-target="#modalLoginAltYandex"
+                        {% endif %}>
+                            <img src="image/catalog/fe/modals/auth/login/yandex.png" alt="">
+                        </a>
+                        <a href="#" {% if login_option is not same as('google') %}
+                            data-bs-toggle="modal" data-bs-target="#modalLoginAltGoogle"
+                        {% endif %}>
+                            <img src="image/catalog/fe/modals/auth/login/google.png" alt="">
+                        </a>
+                        <a href="#" {% if login_option is not same as('mail') %}
+                            data-bs-toggle="modal" data-bs-target="#modalLoginAltMail"
+                        {% endif %}>
+                            <img src="image/catalog/fe/modals/auth/login/mail_ru.png" alt="">
+                        </a>
+                    </div>
+    
+                    <div>
+                        <form action="">
+                            <div class="py-3 px-5">
+                                <label for="login" class="form-text">Email<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input id="login" class="form-control rounded-0" type="text" placeholder="Введите email">
+                                    <span class="input-group-text rounded-0">@{{ domain }}</span>
+                                </div>
+                                
+                            </div>
+
+                            <div class="py-3 px-5">
+                                <label for="password" class="form-text">Пароль<span class="text-danger">*</span></label>
+                                <input id="password" class="form-control rounded-0" type="password" placeholder="Введите пароль">
+                            </div>
+
+                            <div class="py-3 px-5">
+                                <input type="submit" class="btn fe-btn w-100" value="ВОЙТИ">
+                            </div>
+                        </form>
+                    </div>
+
+               
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

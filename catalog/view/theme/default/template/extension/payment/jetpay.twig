@@ -1,0 +1,93 @@
+﻿<div class="buttons d-none">
+    <div class="pull-right">
+        <a href="{{ action }}" id="button-confirm" class="btn btn-primary">
+            {{ button_confirm }}
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function preConfirmation(callback) {
+        var is_confirmed = false;
+        return (function() {
+            if (is_confirmed) {
+                callback();
+            }
+            jQuery.ajax({
+                type: 'get',
+                url: 'index.php?route=extension/payment/jetpay/confirm',
+                cache: false,
+                beforeSend: function() {
+                    $('#button-confirm').attr('disabled', true);
+                },
+                complete: function() {
+                    $('#button-confirm').attr('disabled', false);
+                },
+                success: function() {
+                    is_confirmed = true;
+                    callback();
+                }
+            });
+        })();
+    }
+</script>
+
+{% if not popup_mode %}
+<script>
+    jQuery(document).ready(function() {
+        preConfirmation(function () {
+            window.location = $('#button-confirm').attr('href');
+        });
+    });
+</script>
+{% endif %}
+
+{% if popup_mode %}
+
+<script src="https://{{ paymentpage_host }}/shared/merchant.js"></script>
+<link rel="stylesheet" href="https://{{ paymentpage_host }}/shared/merchant.css" type="text/css"/>
+
+<script>
+    jQuery(document).ready(function () {
+        var confirmOrderBtn = jQuery('#button-confirm');
+        var redirectUrl = confirmOrderBtn.attr('href');
+
+        confirmOrderBtn.on('click', function (e) {
+            e.preventDefault();
+            preConfirmation(function() {
+                showPopup(redirectUrl);
+            });
+        });
+
+        function showPopup(url) {
+            var link = document.createElement('a');
+            link.href = url;
+            var params = link.search.replace(/^\?/, '');
+
+            var config = parseParams(params);
+
+            config.onPaymentSuccess = function () {
+                window.location.replace(config.merchant_success_url);
+            };
+
+            config.onPaymentFail = function () {
+                window.location.replace(config.merchant_fail_url);
+            };
+
+            console.log(config);
+            EPayWidget.run(config);
+        }
+
+        function parseParams(str) {
+            return str.split('&').reduce(function (params, param) {
+                var paramSplit = param.split('=').map(function (value) {
+                    return decodeURIComponent(value.replace('+', ' '));
+                });
+                params[paramSplit[0]] = paramSplit[1];
+                return params;
+            }, {});
+        }
+    });
+</script>
+
+{% endif %}

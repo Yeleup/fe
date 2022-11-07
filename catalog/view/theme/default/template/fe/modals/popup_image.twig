@@ -1,0 +1,33 @@
+<style media="screen">
+    .fe-popup-image:hover {
+        cursor: pointer;
+    }
+</style>
+
+<script type="text/javascript">
+$(document).ready(() => {
+    $('.fe-popup-image').on('click', (e) => {
+        let imageSrc = $(e.currentTarget).attr('src');
+        let imageAlt = $(e.currentTarget).attr('alt');
+        let modal = $('#modalPopupImage');
+        modal.find('img').attr('src', imageSrc);
+        modal.find('img').attr('alt', imageAlt);
+        modal.modal('show');
+    });
+});
+</script>
+
+<div class="modal fade" id="modalPopupImage" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body fe-modal-body">
+                <div class="row">
+                    <img class="img-fluid mx-auto" src="" alt="Item image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

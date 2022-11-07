@@ -1,0 +1,19 @@
+{{ header }}
+
+<main style="min-height: 75vh;">
+    <div class="container">
+        {% for information in informations %}
+            <div class="card my-2">
+                <div class="card-header">{{ information.title }}</div>
+                <div class="card-body">
+                    {{ information.description|striptags|slice(0, 300) }}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ link_information }}{{ information.information_id }}">Прочитать больше</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+
+{{ footer }}

@@ -1,0 +1,23 @@
+{{ header }}
+
+<div class="container-fluid p-5" style="min-height: 75vh;">
+
+    <div class="container m-5">
+        {% if payment_option == "jetpay" %}
+            {{ payment_method }}
+        {% else %}
+            <h1 class="m-5">
+                Заказ #{{ order_id }} был принят.
+            </h1>
+
+            <p class="m-3">
+                <a href="{{ link_home }}" class="small">Вернуться на главную страницу.</a>
+            </p>
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+{{ footer }}

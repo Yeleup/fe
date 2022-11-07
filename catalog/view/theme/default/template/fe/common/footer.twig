@@ -1,0 +1,114 @@
+<style media="screen">
+    @media (max-width: 991.98px) {
+        footer {
+            text-align: center;
+        }
+
+        footer #fe-footer-logo {
+            width: 50%;
+        }
+    }
+</style>
+
+<footer class="py-3">
+    <div class="modals-container">
+        {{ modal_public_offer }}
+        {{ modal_privacy_policy }}
+        {{ modal_payment_refund }}
+    </div>
+    <div class="py-3"></div>
+    <div class="row row-cols-1 row-cols-lg-2" style="--bs-gutter-x: 0">
+
+        <div class="col overflow-hidden">
+            <div class="row row-cols-1 row-cols-lg-2">
+
+                <div class="col text-white text-center">
+                    <div>
+                        <img id="fe-footer-logo" src="image/catalog/fe/static/footer/logo white2 1.png" alt="">
+                    </div>
+                    <div><span>&copy; 2013-2022</span></div>
+                </div>
+
+                <div class="col d-flex">
+                    <ul class="footer-ul-links mx-auto">
+                        <li class="pt-1"><a href="/">Главная</a></li>
+                        <li class="pt-1"><a href="{{ link_about }}">О Нас</a></li>
+                        <li class="pt-1"><a href="{{ link_cooperation }}">Сотрудничество</a></li>
+                        <li class="pt-1"><a href="{{ link_list_details }}">Каталог</a></li>
+                        <li class="pt-1"><a href="#" data-bs-toggle="modal" data-bs-target="#modalPrivacyPolicy">Политика конфиденциальности</a></li>
+                        <li class="pt-1"><a href="#" data-bs-toggle="modal" data-bs-target="#modalPublicOffer">Публичная оферта</a></li>
+                        <li class="pt-1"><a href="#" data-bs-toggle="modal" data-bs-target="#modalPaymentRefund">Оплата и возврат</a></li>
+                        <script>
+                            $('.footer-ul-links [data-bs-toggle="modal"]').click(function () {
+                                var target = $(this).attr('data-bs-target').split('#')[1];
+                                var target_body = $('#' + target + ' .modal-body');
+                                if (!target_body.text()) {
+                                    target_body.load(`{{ link_modal_includes }}/${target}`);
+                                }
+                            });
+                        </script>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col d-flex">
+            <div class="row w-100">
+                <div class="col-12 col-lg-8">
+                    <ul>
+                        <li class="pt-1"><span>
+                            <i class="fas fa-map-marker-alt" style="color: #3A659F;"></i>
+                            Улица Жамбыла 204, Алматы, Казахстан
+                        </span></li>
+                        <li class="pt-1"><span>
+                            <i class="fas fa-map-marker-alt" style="color: #3A659F;"></i>
+                            Улица Емцова 26а, Алматы, Казахстан
+                        </span></li>
+                        <li class="pt-1">
+                            <span>
+                                <a href="https://api.whatsapp.com/send?phone=77712181102">
+                                    <i class="fab fa-whatsapp fw-bold" style="color: #30AC1B;"></i>
+                                    +7 (771) 218 11 02
+                                </a>
+                            </span>
+                        </li>
+                        <li class="pt-1">
+                            <span>
+                                <a href="tel:+7 (727) 390 91 91">
+                                    <i class="fas fa-phone-alt fw-bold" style="color: #3A659F;"></i>
+                                    +7 (727) 390 91 91
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="text-center social-icon-container">
+                        <span class="px-2"><a href="https://www.facebook.com/fealmaty"><i class="fab fa-facebook-square"></i></a></span>
+                        <span class="px-2"><a href="https://www.instagram.com/fealmaty/"><i class="fab fa-instagram-square"></i></a></span>
+                        <span class="px-2"><a href="https://api.whatsapp.com/send?phone=77712181102"><i class="fab fa-whatsapp"></i></a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "LocalBusiness",
+        "address": ["Улица Жамбыла 204, Алматы, Казахстан", "Улица Емцова 26а, Алматы, Казахстан"],
+        "description": "Наша компания имеет свой собственный большой магазин оптовой и розничной торговли, находящийся в центре города Алматы. Магазин имеет удобное месторасположение с парковкой для клиентов. Имеются большие склады и запасы постоянно пополняются. Мы разработали собственную систему логистики, позволяющую осуществлять прямые поставки из Южной Кореи и Тайваня на регулярной основе. Мы сотрудничаем со многими автосервисами города Алматы, а так же в регионах Казахстана, помогаем грамотно подобрать запчасти и своевременно их доставить, при этом даём гарантию на заводской брак. Так же мы работаем с большим количеством частных лиц, будь то магазины и бутики, снабжая их запасными частями высокого качества.",
+        "name": "Пятый Элемент",
+        "telephone": ["+7 (771) 218 11 02", "+7 (727) 390 91 91"],
+        "email": ["central@fe.kz", "5element@fe.kz"],
+        "image": "https://fe.kz/image/catalog/fe/static/footer/logo%20white2%201.png",
+        "openingHours": "Пн - Пт с 10:00 до 18:00; Сб с 10:00 до 16:00"
+    }
+</script>
+
+</body>
+</html>

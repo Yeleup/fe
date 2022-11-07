@@ -1,0 +1,136 @@
+{{ header }}
+    
+<main class="">
+    <div class="container-fluid" style="min-height: 400px; background-color: #F6FAFF;">
+
+        <div class="row py-5">
+
+            <div class="col-sm-12 col-md-2">
+                <div class="shadow-sm mx-auto w-100" style="background-color: #FFE767; padding: 5px 0;">
+                    <div class="d-flex" style="background-color: white;">
+                        <ul class="list-unstyled my-auto py-3 px-2">
+                            {% set left_icons = [
+                                {src: '1', text: 'Дворники'},
+                                {src: '2', text: 'Масла'},
+                                {src: '3', text: 'Лампочки, ветровики, мухобойки'},
+                                {src: '4', text: 'Акционные товары'},
+                            ] %}
+                            {% for i in left_icons %}
+                            <li style="font-size: .8em;">
+                                <div class="row gx-0">
+                                    <div class="col-3 my-auto text-center">
+                                        <img class="w-50" src="image/catalog/fe/pages/goods/icon{{ i.src }}.png" alt="">
+                                    </div>
+                                    <div class="col my-auto">
+                                        <span>{{ i.text }}</span>
+                                    </div>
+                                </div>
+                            </li>    
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row row-cols-sm-1 row-cols-md-1" id="itemContainer">
+                    {% for product in products %}
+                    <div class="col px-3 py-3" id="itemExample">
+                        <div class="row h-100 px-1 py-3" style="background-color: white; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                            <div class="col">
+                                <div style="font-size: .8em;">
+                                        <span>
+                                            Дворники
+                                        </span>
+                                        <span class="mx-2">
+                                            <img src="image/catalog/fe/pages/goods/icon_check.svg" alt="">
+                                            В наличии
+                                        </span>
+                                </div>
+                                <div class="row py-3 h-100" style="font-size: 1.2em;">
+                                    <div class="col-6 my-auto text-center">
+                                        <b>
+                                            {{ product.attributes().name }}
+                                        </b>
+                                    </div>
+                                    <div class="col-6 my-auto text-center">
+                                        <img class="w-100" src="{{ product.attributes().imageurl | replace({'%size%': '250'}) }}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="font-size: .9em; border-left: 1px solid #ECECEC">
+                                <div class="row h-50 gx-0">
+                                    <div class="col my-auto">
+                                        <div class="text-muted">
+                                            Производитель:
+                                        </div>
+                                        <div>
+                                            Корея
+                                        </div>
+                                    </div>
+                                    <div class="col my-auto">
+                                        <div class="row align-items-end h-100 gx-0">
+                                            <div class="col text-center" style="font-size: 1.2em;">
+                                                <div class="d-inline-block px-3 text-center position-relative" style="border: 1px solid #0575C0">
+                                                    - <span id="buy-counter-{{ product.attributes().unitid }}">1</span> +
+                                                    <div class="position-absolute h-100 w-100 top-0 mx-auto row" style="left: 0;">
+                                                        <div id="buy-counter-btn-minus-{{ product.attributes().unitid }}" class="col fe-goods-btn-inc"></div>
+                                                        <div id="buy-counter-btn-plus-{{ product.attributes().unitid }}" class="col fe-goods-btn-inc"></div>
+                                                    </div>
+                                                </div>
+                                                <script>
+                                                    $(document).ready(() => {
+                                                        let unitid = '{{ product.attributes().unitid }}'
+                                                        let counter = $(`#buy-counter-${unitid}`);
+                                                        $(`#buy-counter-btn-minus-${unitid}`).on('click', function () {
+                                                            let count = counter.html();
+                                                            if (count > 0) {
+                                                                counter.html(parseInt(count) - 1);
+                                                            }
+                                                        });
+                                                        $(`#buy-counter-btn-plus-${unitid}`).on('click', function () {
+                                                            let count = counter.html();
+                                                            counter.html(parseInt(count) + 1);
+                                                        });
+                                                    });
+                                                </script>
+                                            </div>
+                
+                                            <div class="col text-center">
+                                                900 тг
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row h-50 gx-0">
+                                    <div class="col my-auto">
+                                        <div class="text-muted">
+                                            Номер детали:
+                                        </div>
+                                        <div>
+                                            96132997 , 40 см
+                                        </div>
+                                    </div>
+                                    <div class="col my-auto">
+                                        <button class="btn rounded-0 w-100" style="border: 1px solid #0575C0">
+                                            Купить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {# <div class="fe">
+                    {{ pagination }}
+                </div> #}
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+{{ footer }}

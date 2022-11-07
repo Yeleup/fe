@@ -1,0 +1,76 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h1>{{ lang_heading_title }}</h1>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ lang_heading_title }}</h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <td>
+                                    Номер заказа
+                                </td>
+                                <td>
+                                    Покупатель
+                                </td>
+                                <td>
+                                    Статус
+                                </td>
+                                <td class="text-right">
+                                    Адрес
+                                </td>
+                                <td class="text-right">
+                                    Продукты
+                                </td>
+                                <td class="text-right">
+                                    Время заказа
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>
+                                    {{ order['id'] }}
+                                </td>
+                                <td>
+                                    {{ order['customer'] }}: {{ order['customer_info'] }}
+                                </td>
+                                <td>
+                                    {{ order['status'] }}
+                                </td>
+                                <td class="text-right">
+                                    {{ order['address'] }}
+                                </td>
+                                <td class="text-right">
+                                    {% for product in order['products'] %}
+                                    <div class="">
+                                        {{ product['name'] }}
+                                        <span class="text-info">({{ product['amount_ordered'] }})</span>
+                                    </div>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{ order['created_at'] }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {{ pagination }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}

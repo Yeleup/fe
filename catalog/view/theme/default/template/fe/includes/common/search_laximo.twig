@@ -1,0 +1,150 @@
+<div class="container-fluid">
+    {% if customer_id %}
+    <div class="">
+        <!-- <div class="row gx-0 row-cols-1 row-cols-md-4">
+            <div class="col">
+                <select class="form-select" name="catalog" id="catalogSelect">
+                    <option value="none" selected>Все марки</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <select class="form-select" name="ssd" id="modelSelect" disabled>
+                    <option value="none" selected>Модель</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <select class="form-select" name="ssd" id="yearSelect" disabled>
+                    <option value="none" selected>Год</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <input type="submit" id="laximoSearchBtn" class="btn btn-primary w-100" value="Найти">
+            </div>
+        </div>
+
+        <script>
+        $(document).ready(() => {
+            let catSel = $('#catalogSelect');
+            let modelSel = $('#modelSelect');
+            let yearSel = $('#yearSelect');
+            let searchBtn = $('#laximoSearchBtn');
+
+            modelSel.prop('disabled', true);
+            yearSel.prop('disabled', true);
+
+            $.ajax('index.php?route=fe/api/laximo/list_catalogs')
+                .done((res) => {
+                    let catalogDisplaySet = new Set([
+                        'Chevrolet',
+                        'Daewoo',
+                        'Honda',
+                        'Hyundai',
+                        'Infiniti',
+                        'Isuzu',
+                        'Kia',
+                        'Lexus',
+                        'Mazda',
+                        'Mitsubishi',
+                        'Nissan',
+                        'Porsche',
+                        'Ravon',
+                        'Renault',
+                        'SsangYong',
+                        'Subaru',
+                        'Suzuki',
+                        'Toyota',
+                        'Volkswagen',
+                        'Volvo',
+                    ]);
+
+                    catSel.empty();
+                    catSel.append(`<option value="none" selected>Каталог</option>`);
+                    res.row.forEach(e => {
+                        let catalogName = `${e['@attributes'].name}`;
+
+                        if (catalogDisplaySet.has(catalogName)) {
+                            catSel.append(`<option value="${e._links.GetWizard2}">${catalogName}</option>`);
+                        }
+                    })
+                });
+
+            catSel.on('change', () => {
+                modelSel.empty();
+                yearSel.empty();
+
+                if (catSel.val() == 'none') {
+                    modelSel.prop('disabled', true);
+                    yearSel.prop('disabled', true);
+                } else {
+                    let catalog_link = catSel.val();
+                    $.ajax(catalog_link)
+                        .done((res) => {
+                            modelSel.prop('disabled', false);
+                            yearSel.prop('disabled', true);
+
+                            modelSel.append(`<option value="none" selected>Модель</option>`);
+                            res.data.options.row.forEach(e => {
+                                modelSel.append(`<option value="${e._links.link}">${e['@attributes'].value}</option>`);
+                            });
+                        });
+                }
+            });
+
+            modelSel.on('change', () => {
+                yearSel.empty();
+
+                if (modelSel.val() == 'none') {
+                    yearSel.prop('disabled', true);
+                } else {
+                    let model_link = modelSel.val();
+                    $.ajax(model_link)
+                        .done((res) => {
+                            yearSel.prop('disabled', false);
+                            let yearDisplaySet = new Set();
+
+                            yearSel.append('<option value="none">Год</option>');
+                            Object.keys(res.data).forEach(e => {
+                                let modification = res.data[e];
+                                let prod_range = '';
+                                let attr_keys = ['prodrange', 'model_year', 'manufactured'];
+
+                                if (Array.isArray(modification.attribute)) {
+                                    modification.attribute.forEach(i => {
+                                        if (attr_keys.includes(i['@attributes'].key)) {
+                                            prod_range = i['@attributes'].value;
+                                        }
+                                    });
+                                } else {
+                                    if (attr_keys.includes(modification.attribute['@attributes'].key)) {
+                                        prod_range = modification.attribute['@attributes'].value;
+                                    }
+                                }
+
+                                let displayValue = `${modification['@attributes'].brand} ${modification['@attributes'].name} ${prod_range}`;
+                                if (!yearDisplaySet.has(displayValue)) {
+                                    yearSel.append(`<option value="${modification._links.link}">${displayValue}</option>`);
+                                }
+                                yearDisplaySet.add(displayValue);
+                            });
+                        });
+                }
+            });
+
+            searchBtn.on('click', () => {
+                let link = yearSel.val();
+                console.log(link);
+
+                let url = new URL(link);
+                let params = url.searchParams
+                if (link) {
+                    $(location).attr('href', `index.php?route=fe/pages/list_units&catalog=${params.get('catalog')}&vehicle_id=${params.get('vehicle_id')}&ssd=${params.get('ssd')}`);
+                }
+            });
+        });
+        </script>
+    </div> -->
+    {% endif %}
+</div>

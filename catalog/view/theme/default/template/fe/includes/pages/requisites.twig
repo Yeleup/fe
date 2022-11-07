@@ -1,0 +1,47 @@
+<div class="container">
+
+    <div class="container">
+        <h6>Реквизиты</h6>
+        <div class="">
+            {% if requisites %}
+            {% for requisite in requisites %}
+                <div class="form-check">
+                    <input class="form-check-input" id="checkoutRequisite{{ requisite.id }}" type="radio" name="requisite_id" value="{{ requisite.id }}">
+                    <label class="form-check-label" for="checkoutRequisite{{ requisite.id }}">
+                        {{ requisite.address }}
+                    </label>
+                </div>
+            {% endfor %}
+            {% else %}
+            <input class="form-check-input" type="radio" id="checkoutRequisiteNone" name="requisite_id" value="0" checked>
+            <label class="form-check-label" for="checkoutRequisiteNone">
+                Не выбрано
+            </label>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row justify-content-end p-4">
+        <div class="col-3">
+            <button class="btn fe-btn-bordered w-100" id="checkoutBtnRequisiteBack" type="button" name="button">Назад</button>
+            <script type="text/javascript">
+                $(document).ready(() => {
+                    $('#checkoutBtnRequisiteBack').click(() => {
+                        new bootstrap.Tab($('#pills-personal-tab')).show();
+                    });
+                });
+            </script>
+        </div>
+        <div class="col-3">
+            <button class="btn fe-btn-bordered w-100" id="checkoutBtnRequisiteNext" type="button" name="button">Далее</button>
+            <script type="text/javascript">
+                $(document).ready(() => {
+                    $('#checkoutBtnRequisiteNext').click(() => {
+                        new bootstrap.Tab($('#pills-delivery-tab')).show();
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="container">
+    <input class="w-100 form-control" placeholder="Поиск" type="text" name="" id="fe-product-search" value="">
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $('#fe-product-search').on('input', (e) => {
+                let search = $(e.target).val();
+                $('.fe-search-target-container').each((idx, val) => {
+                    let target = $(val).find('.fe-search-target');
+                    let name = $(target).html().trim();
+                    console.log(name);
+                    if (name.toLowerCase().includes(search.toLowerCase())) {
+                        $(val).removeClass('d-none');
+                    } else {
+                        $(val).addClass('d-none');
+                    }
+                });
+            });
+            $('#fe-product-search').keydown((e) => {
+                if (e.keyCode === 13) {
+                    $('#fe-product-search').trigger('input');
+                }
+            });
+        });
+    </script>
+</div>

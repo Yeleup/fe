@@ -1,0 +1,26 @@
+<div class="container-fluid" style="background-color: #E1EDFF;">
+    <div class="container p-5">
+        <div class="text-center mb-4">
+            <h4>Есть вопросы? Оставьте свои контакты и мы Вам перезвоним</h4>
+        </div>
+
+        <form action="{{ action_callback }}" method="POST" class="row gx-5">
+            <input type="hidden" name="redirect" value="{{ link_redirect }}">
+
+            <div class="col">
+                <input name="name" class="form-control rounded-0" type="text" placeholder="Введите имя">
+            </div>
+
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text">+7</span>
+                    <input name="phone" type="text" class="form-control rounded-0" placeholder="Введите номер">
+                </div>
+            </div>
+
+            <div class="col">
+                <input type="submit" class="btn btn-primary w-100 rounded-0" value="Отправить">
+            </div>
+        </form>
+    </div>
+</div>

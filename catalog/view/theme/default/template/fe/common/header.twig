@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>{{ title }}</title>
+
+    <meta property="og:title" content="{{ title|escape }}" />
+    <meta property="og:description" content="{{ description|escape }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://fe.kz/image/catalog/fe/static/footer/logo%20white2%201.png" />
+    <meta property="og:url" content="{{ request_uri }}" />
+
+    <!-- Popper JS -->
+    <script src="catalog/view/javascript/bootstrap-5.1.3/js/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    {# Bootstrap #}
+    <link rel="stylesheet" href="catalog/view/javascript/bootstrap-5.1.3/css/bootstrap.min.css">
+    <script src="catalog/view/javascript/bootstrap-5.1.3/js/bootstrap.min.js"></script>
+    {# Font Awesome #}
+    <script src="catalog/view/javascript/font-awesome/font-awesome.js"></script>
+    {# Splide #}
+    <link rel="stylesheet" href="catalog/view/javascript/splide-3.1.9/dist/css/splide.min.css">
+    <script src="catalog/view/javascript/splide-3.1.9/dist/js/splide.min.js"></script>
+    {# JQuery #}
+    <script src="catalog/view/javascript/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+    {# OpenCart #}
+    <script src="catalog/view/javascript/common.js"></script>
+
+    <link rel="icon" href="{{ link_icon }}">
+
+    {% if description %}
+    <meta name="description" content="{{ description }}" />
+    {% endif %}
+
+    <!-- Google -->
+    <meta name="google-site-verification" content="7FYj1yfHqmCYpAN0g9L44EARu_afjsm3wTzVl3-7frg" />
+
+    <!-- JivoChat -->
+    <!-- <script src="//code-eu1.jivosite.com/widget/h4ENXDdelX" async></script> -->
+
+    {# FE #}
+    <link href="catalog/view/theme/default/stylesheet/festyle.css" rel="stylesheet">
+    <script src="catalog/view/javascript/fescript.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63104223-3"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-63104223-3');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63104223-2"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-63104223-2');
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    ym(88717571, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/88717571" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+
+    <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    ym(88862240, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/88862240" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+<body class="">
+{{ notification }}
+<header>
+
+    {{ modal_auth }}
+    {{ modal_popup_image }}
+
+    {% set phone_whatsapp = '+7 (771) 218 11 02' %}
+    {% set phone_call = '+7 (727) 390 91 91' %}
+
+    <div class="container-fluid">
+        <!-- Large Screen -->
+        <div class="row d-none d-lg-flex">
+            <div class="col-xl-6 col-xs-12">
+                <div class="row h-100">
+                    <div class="col text-center">
+                        <a href="{{ link_home }}">
+                            <img src="image/catalog/fe/static/header/logo 1.png" alt="logo">
+                        </a>
+                    </div>
+                    <div class="col-md-7 col-xs-12">
+                        <div class="row h-100">
+                            <ul class="list-unstyled list-inline text-center my-auto">
+                                <li class="list-inline-item">
+                                    <a href="{{ link_about }}">О НАС</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{{ link_cooperation }}">СОТРУДНИЧЕСТВО</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{{ link_contacts }}">КОНТАКТЫ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-4 col-xs-12 text-center my-auto" style="font-size: .9em;">
+                        <div class="row mx-auto">
+                            <div class="col">
+                                <i class="fab fa-whatsapp fw-bold" style="color: #30AC1B;"></i>
+                                {{ phone_whatsapp }}
+                            </div>
+                        </div>
+                        <div class="row mx-auto">
+                            <div class="col">
+                                <i class="fas fa-phone-alt fw-bold" style="color: #3A659F;"></i>
+                                {{ phone_call }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="row h-100">
+                            {% if customer_id %}
+                            <div class="dropdown my-auto text-center">
+                                <button class="btn btn-primary my-auto w-100 rounded-0 dropdown-toggle text-uppercase" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ customer.firstname }} {{ customer.lastname }}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="{{ link_account }}">Аккаунт</a></li>
+                                    <li><a class="dropdown-item" href="{{ link_orders }}">История Заказов</a></li>
+                                    <li><a class="dropdown-item" href="{{ link_logout }}">Выйти</a></li>
+                                </ul>
+                            </div>
+                            {% else %}
+                            <a class="btn btn-primary my-auto rounded-0" href="" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                                <i class="fas fa-user"></i>
+                                Войти | Регистрация
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a href="{{ link_cart }}" class="btn text-center fe-header-cart-icon">
+                            <div class="position-relative">
+                                <span class="position-absolute d-none top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <span id="feCartItemsCounterBadge">0</span>
+                                    <span class="visually-hidden">Предметов в корзине</span>
+                                </span>
+                                <script type="text/javascript">
+                                $(document).ready(() => {
+                                    feCartUpdatedEventEmitter.subscribe((itemCount) => {
+                                        let badgeElem = $('#feCartItemsCounterBadge');
+                                        if (itemCount == 0) {
+                                            badgeElem.parent().addClass('d-none');
+                                        } else {
+                                            badgeElem.parent().removeClass('d-none');
+                                        }
+                                        badgeElem.html(itemCount);
+                                    });
+                                });
+                                </script>
+                            </div>
+                            <i class="fas fa-shopping-cart"></i>
+                            <div></div>
+                            <span class="position-relative">
+                                Корзина
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Small Screen -->
+        <style media="screen">
+            .fe-navbar-small .fe-navbar-icon {
+                color: white;
+                font-size: 1.5rem;
+            }
+
+            .fe-navbar-small .fe-navbar-phone span {
+                color: white;
+                font-weight: bold;
+            }
+        </style>
+
+        <div class="row d-lg-none fe-navbar-small px-2 py-4" style="background-color: #2C5183;">
+            <div class="col-2 my-auto">
+                <button class="btn" type="button" name="button"
+                    data-bs-toggle="collapse" data-bs-target="#feNavbarSmallCollapse"
+                    aria-expanded="false" aria-controls="feNavbarSmallCollapse">
+                    <i class="fa fa-bars fe-navbar-icon"></i>
+                </button>
+            </div>
+            <div class="col-8 my-auto text-center">
+                <div class="d-inline-block fe-navbar-phone px-2">
+                    <i class="fab fa-whatsapp fw-bold" style="color: #30AC1B;"></i>
+                    <span>{{ phone_whatsapp }}</span>
+                </div>
+                <div class="d-inline-block fe-navbar-phone px-2">
+                    <i class="fas fa-phone-alt fw-bold" style="color: #3A659F;"></i>
+                    <span>{{ phone_call }}</span>
+                </div>
+            </div>
+            <div class="col-2 my-auto text-center">
+                <a href="{{ link_cart }}" class="btn text-center">
+                    <div class="position-relative">
+                        <span class="position-absolute d-none top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 1.5em;">
+                            <span id="feCartItemsCounterBadgeSmall">0</span>
+                            <span class="visually-hidden">Предметов в корзине</span>
+                        </span>
+                        <script type="text/javascript">
+                            $(document).ready(() => {
+                                feCartUpdatedEventEmitter.subscribe((itemCount) => {
+                                    let badgeElem = $('#feCartItemsCounterBadgeSmall');
+                                    if (itemCount == 0) {
+                                        badgeElem.parent().addClass('d-none');
+                                    } else {
+                                        badgeElem.parent().removeClass('d-none');
+                                    }
+                                    badgeElem.html(itemCount);
+                                });
+                            });
+                        </script>
+                    </div>
+                    <i class="fas fa-shopping-cart fe-navbar-icon"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="collapse text-center fe-navbar-small" id="feNavbarSmallCollapse">
+            <div class="p-3 fe-nav-collapse-items">
+                <div><a class="btn" href="{{ link_about }}">О нас</a></div>
+                <div><a class="btn" href="{{ link_cooperation }}">Сотрудничество</a></div>
+                <div><a class="btn" href="{{ link_contacts }}">Контакты</a></div>
+
+                {% if customer_id %}
+                <div><a class="btn w-100" href="{{ link_account }}">Аккаунт</a></div>
+                <div><a class="btn w-100" href="{{ link_orders }}">История Заказов</a></div>
+                <div><a class="btn w-100" href="{{ link_logout }}">Выйти</a></div>
+                {% else %}
+                <a class="btn w-100 my-auto rounded-0" href="" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                    <i class="fas fa-user"></i>
+                    Войти | Регистрация
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</header>

@@ -1,0 +1,102 @@
+{{ deps }}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="position-relative">
+                <img src="{{ image_url }}" id="unitImage" class="position-absolute w-100" alt="">
+                <div id="detailsContainer">
+                </div>
+            </div>
+        </div>
+
+        <div class="col" id="detailsDescriptionContainer">
+        </div>
+
+        <script type="text/javascript">
+        $(document).ready(() => {
+            let unitImage = $('#unitImage');
+            let cont = $('#imgDataContainer');
+            let detailsContainer = $('#detailsContainer');
+            let detailsDescriptionContainer = $('#detailsDescriptionContainer');
+
+            let imgSize = [0, 0];
+            let img = new Image();
+            img.onload = function() {
+                imgSize = [this.width, this.height];
+            };
+            img.src = unitImage.attr('src');
+
+            let updateDetail = function(detailElem) {
+                let scale = unitImage.width() / imgSize[0];
+                let width = scale * detailElem.attr('data-fe-width');
+                let height = scale * detailElem.attr('data-fe-height');
+                let top = scale * detailElem.attr('data-fe-top');
+                let left = scale * detailElem.attr('data-fe-left');
+                detailElem.css('width', width);
+                detailElem.css('height', height);
+                detailElem.css('top', top);
+                detailElem.css('left', left);
+            };
+
+            let highlightDetails = function(code) {
+                detailsDescriptionContainer.find('div').removeClass('text-danger');
+                detailsDescriptionContainer.find(`div[data-fe-code=${code}]`).addClass('text-danger');
+            };
+
+            $(window).resize(function() {
+                detailsContainer.children().each(function(i, v) {
+                    updateDetail($(v));
+                });
+            });
+
+            $.ajax('{{ link_details }}')
+            .done(res => {
+                console.log("Link Details");
+                console.log(res);
+                res.row.forEach((item, i) => {
+                    let template = $(`
+                        <div data-fe-code="${item['@attributes'].codeonimage}">
+                            ${item['@attributes'].name}
+                            ${item['@attributes'].oem}
+                        </div>
+                    `);
+
+                    detailsDescriptionContainer.append(template);
+                });
+
+            });
+
+            $.ajax('{{ link_image }}')
+            .done(res => {
+                console.log("Link Image");
+                console.log(res);
+                res.row.forEach((item, i) => {
+                    let attrs = item['@attributes'];
+                    let height = attrs.y2 - attrs.y1;
+                    let width = attrs.x2 - attrs.x1;
+                    let template = $(`
+                    <div
+                    data-fe-code="${item['@attributes'].code}"
+                    data-fe-width="${width}"
+                    data-fe-height="${height}"
+                    data-fe-top="${attrs.y1}"
+                    data-fe-left="${attrs.x1}"
+                    style="
+                    border: 1px solid black;
+                    position: absolute;
+                    cursor: pointer;
+                    opacity: 0.3;"
+                    ></div>
+                    `);
+                    updateDetail(template);
+                    detailsContainer.append(template);
+                });
+
+                detailsContainer.find('div').click(function(e) {
+                    highlightDetails($(e.target).attr('data-fe-code'));
+                });
+            });
+        });
+        </script>
+    </div>
+</div>

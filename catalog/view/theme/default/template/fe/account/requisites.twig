@@ -1,0 +1,49 @@
+{{ header }}
+<main style="min-height: 75vh;">
+
+    <div class="container w-50 mx-auto">
+
+        <style media="screen">
+            form.fe-account-form {
+                background-color: #f8f8f8;
+            }
+        </style>
+
+        <form class="p-3 fe-account-form" action="{{ action_requisites }}" method="post">
+            <div class="my-4">
+                <label for="company_full_name" class="form-text">Полное название компании<span class="text-danger">*</span></label>
+                <input id="company_full_name" name="company_full_name" class="form-control rounded-0" type="text" placeholder="Введите название компании">
+            </div>
+            <div class="my-4">
+                <label for="idNumber" class="form-text">БИН или ИИН<span class="text-danger">*</span></label>
+                <input id="idNumber" name="idNumber" class="form-control rounded-0" type="text" placeholder="Введите номер">
+            </div>
+            <div class="my-4">
+                <label for="legal_address" class="form-text">Юридический адрес <span class="text-danger">*</span> </label>
+                <input id="legal_address" name="legal_address" class="form-control rounded-0" type="text" placeholder="Введите юридический адрес">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Добавить Реквизит</button>
+        </form>
+
+        <div class="container p-3">
+            <h5 class="text-center">Реквизиты</h5>
+            <ul class="list-group">
+                {% for requisite in requisites %}
+                <li class="list-group-item">
+                    <span>{{ requisite.address }}</span>
+                    <form class="float-end" action="{{ action_requisites_delete }}" method="post">
+                        <input type="hidden" name="requisite_id" value="{{ requisite.id }}">
+                        <button class="btn btn-danger" type="submit" name="button">Удалить</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+</main>
+
+
+
+{{ footer }}

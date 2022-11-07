@@ -1,0 +1,22 @@
+<script>
+    $(document).ready(() => {
+        let checked = {% if is_checked %}'checked'{% else %}''{% endif %};
+        let inputForm = `
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="fe_add_to_information_news">
+                    Добавить на страницу новостей
+                </label>
+                <div class="col-sm-10">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        name="fe_add_to_information_news"
+                        id="fe_add_to_information_news"
+                        ${checked}
+                        >
+                </div>
+            </div>
+        `;
+        $('#tab-general .tab-content .tab-pane').append(inputForm);
+    });
+</script>

@@ -1,0 +1,153 @@
+{{ header }}
+
+<main class="" style="min-height: 75vh;">
+    <div class="container mt-3">
+
+        {# <div class="py-2">
+            <a class="d-flex text-black text-decoration-none" href="">
+                <img src="image/catalog/fe/pages/details/arrow_back.svg" alt="">
+                <span class="d-inline-block my-auto mx-2">
+                    Назад
+                </span>
+            </a>
+        </div> #}
+
+        <div class="row px-4 py-5" style="background-color: #F6FAFF;">
+            <div class="col">
+                {# <div class="mb-4">
+                    <span style="font-size: .9em;">Дворники</span>
+                </div> #}
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <b>
+                            {{ product.name }}
+                        </b>
+                    </div>
+                    <div class="col">
+                        {% if product.quantity > 0 %}
+                            <img src="image/catalog/fe/pages/details/icon_check.svg" alt="">
+                            <span>
+                                В наличии
+                            </span>
+                        {% else %}
+                            <span class="text-danger" style="font-weight: 800; font-size: 1.3em">Не имеется на складе.</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {% set left_infos = [
+                            {top: 'Производитель:', bottom: product.brand_name},
+                            {top: 'Номер детали:', bottom: product.crosscode},
+                            {top: 'Название служебное:', bottom: product.name},
+                        ] %}
+                        {% for left_info in left_infos %}
+                        <div class="my-2">
+                            <div>
+                                <span class="text-muted">{{ left_info.top }}</span>
+                            </div>
+                            <div>
+                                <b>{{ left_info.bottom }}</b>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col">
+                        <div class="row align-items-end h-100 gx-0">
+                            <div class="col text-center" style="font-size: 1.2em;">
+                                <div class="d-inline-block px-3 text-center position-relative" style="border: 1px solid #0575C0">
+                                    - <span id="buy-counter">1</span> +
+                                    <div class="position-absolute h-100 w-100 top-0 mx-auto row" style="left: 0;">
+                                        <div id="buy-counter-btn-minus" class="col fe-goods-btn-inc"></div>
+                                        <div id="buy-counter-btn-plus" class="col fe-goods-btn-inc"></div>
+                                    </div>
+                                </div>
+                                <script>
+                                    $(document).ready(() => {
+                                        let productId = '{{ product.product_id }}';
+                                        let counter = $('#buy-counter');
+                                        let updateCost = function () {
+                                            let price = '{{ product.price }}';
+                                            let count = counter.html();
+                                            let totalCost = price * count
+                                            $('#feProductCost').text(`${totalCost} тг`);
+                                        };
+                                        $('#buy-counter-btn-minus').on('click', function () {
+                                            let count = counter.html();
+                                            if (count > 1) {
+                                                counter.html(parseInt(count) - 1);
+                                            }
+                                            updateCost();
+                                        });
+                                        $('#buy-counter-btn-plus').on('click', function () {
+                                            let count = counter.html();
+                                            counter.html(parseInt(count) + 1);
+                                            updateCost();
+                                        });
+                                        $('#fePurchaseButton').on('click', () => {
+                                            let quantity = counter.html();
+                                            $.ajax({
+                                                url: 'index.php?route=checkout/cart/add',
+                                                method: 'POST',
+                                                data: {
+                                                    product_id: productId,
+                                                    quantity: quantity
+                                                }
+                                            })
+                                                .done(res => {
+                                                    feCartUpdatedEventEmitter.emit();
+                                                });
+                                        });
+                                    });
+                                </script>
+                            </div>
+
+                            <div class="col text-center">
+                                <span id="feProductCost">{{ product.price }}</span>
+                            </div>
+
+                            <div class="col">
+                                <button id="fePurchaseButton" class="btn rounded-0 w-100" style="border: 1px solid #0575C0">
+                                    Купить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Кросс-номера</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for crosscode in product.crosscodes %}
+                                <tr>
+                                    <th scope="row">{{ crosscode }}</th>    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>            <div class="col-5 text-end">
+                {% if product.images %}
+                <div class="d-inline-block" style="height: 224px; width: 316px;">
+                    <img class="img-fluid img-thumbnail" src="image/{{ product.images[0].image }}" alt="">
+                </div>
+                {% endif %}
+                {# Image Here #}
+            </div>
+
+            <div class="my-3"></div>
+        </div>
+
+    </div>
+</main>
+
+{{ footer }}

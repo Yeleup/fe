@@ -1,0 +1,387 @@
+{{ header }}
+
+<style>
+.fe-pages-cart-table-row {
+    background-color: #F6FAFF;
+    padding: .5em;
+    margin: 1em 0;
+}
+
+.fe-pages-cart-table-row.fe-danger {
+    background-color: #FFE7E7;
+}
+</style>
+
+<main style="min-height: 50vh;">
+    <div class="container mt-3">
+
+        {{ cart_button_links }}
+
+        <div class="row">
+            <div class="col">
+                <div class="row fe-table-header mx-auto">
+                    {% set tb_header = [
+                        'Марка, группы',
+                        'Код',
+                        'Название',
+                        'Наличие',
+                        'Цена',
+                        'Количество',
+                        'Сумма',
+                    ] %}
+                    {% for i in tb_header %}
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            {{ i }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div id="fe-cart-row-container">
+                    {% for product in products %}
+                    <div class="fe-pages-cart-table-row" id="table-row-id-{{ product['cart_id'] }}">
+                        <div class="text-end">
+                            <button class="btn" id="btn-cart-remove-{{ product['cart_id'] }}">
+                                <img src="image/catalog/fe/pages/bin/cross.svg" alt="">
+                            </button>
+
+                            <script>
+                            $(document).ready(() => {
+                                let cartId = '{{ product['cart_id'] }}';
+                                let btn = `#btn-cart-remove-${cartId}`;
+                                let row = `#table-row-id-${cartId}`;
+                                $(btn).on('click', () => {
+                                    $.ajax({
+                                        url: 'index.php?route=checkout/cart/remove',
+                                        method: 'POST',
+                                        data: {
+                                            key: cartId
+                                        }
+                                    })
+                                        .done(res => {
+                                            $(row).animate({
+                                                height: "toggle",
+                                                margin: "0",
+                                                paddingTop: "0",
+                                                paddingBottom: "0"
+                                            }, 600, () => {
+                                                $(row).remove();
+                                                updateLinkDeliveryBtn();
+                                                updateTotalValue();
+                                            });
+                                            feCartUpdatedEventEmitter.emit();
+                                        });
+                                });
+                            });
+                            </script>
+                        </div>
+
+                        <div class="row fe-table-data-row mb-3 gx-0 mx-auto">
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    Корейские авто, Корея
+                                </div>
+                            </div>
+
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    {{ product['crosscode'] }}
+                                </div>
+                            </div>
+
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    {{ product['name'] }}
+                                </div>
+                            </div>
+
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    {% if product['quantity'] > 0 %}
+                                        <div>
+                                            <img src="image/catalog/fe/pages/bin/icon_check.svg" alt="">
+                                            В наличии
+                                        </div>
+                                    {% else %}
+                                        <span class="text-danger">Нет в наличии</span>
+                                    {% endif %}
+                                    <span class="{% if product['quantity'] <= 0 %}d-none{% endif %}">
+                                        (<span id="fe-cart-quantity-{{ product['cart_id'] }}" class="fe-cart-quantity">
+                                            {{ product['quantity'] }}
+                                        </span>)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    <span id="fe-cart-price-{{ product['cart_id'] }}">
+                                        {{ product['price']|round() }}
+                                    </span> тг
+                                </div>
+                            </div>
+
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    <div class="input-group">
+                                        <button type="button" id="buy-counter-btn-minus-{{ product['cart_id'] }}" class="btn btn-secondary" name="button">-</button>
+                                        <input class="form-control" id="fe-cart-item-counter-{{ product['cart_id'] }}" type="text" value="{{ product['cart_quantity'] }}">
+                                        <button type="button" id="buy-counter-btn-plus-{{ product['cart_id'] }}" class="btn btn-secondary" name="button">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col d-flex py-2">
+                                <div class="d-inline-block text-center m-auto">
+                                    <span id="fe-cart-price-total-{{ product['cart_id'] }}" class="fe-cart-price-total">0</span> тг
+                                </div>
+                                <script>
+                                $(document).ready(() => {
+                                    let quantityInputElem = $('#fe-cart-item-counter-{{ product['cart_id'] }}');
+
+                                    let updateTotalSum = () => {
+                                        let cartId = '{{ product['cart_id'] }}';
+                                        let cartPrice = $(`#fe-cart-price-${cartId}`);
+                                        let cartPriceTotal = $(`#fe-cart-price-total-${cartId}`);
+                                        let cartQuantity = quantityInputElem;
+
+                                        let total = cartPrice.html() * cartQuantity.val();
+
+                                        cartPriceTotal.html(total);
+                                        updateTotalValue();
+                                    };
+
+                                    let updateCartIdTotal = (amount) => {
+                                        let cartId = '{{ product['cart_id'] }}';
+                                        let counter = quantityInputElem;
+                                        let newVal = parseInt(amount);
+                                        if (newVal > 0) {
+                                            let price = Number($('#fe-cart-price-{{ product['cart_id'] }}').html());
+                                            counter.val(newVal);
+                                            $('#fe-cart-price-total-{{ product['cart_id'] }}').html(newVal * price);
+
+                                            $.ajax({
+                                                url: 'index.php?route=checkout/cart/edit',
+                                                method: 'POST',
+                                                data: {
+                                                    quantity: {
+                                                        [cartId]: newVal
+                                                    }
+                                                }
+                                            })
+                                            .done(res => {
+                                                console.log('cart updated.');
+                                                feCartUpdatedEventEmitter.emit();
+                                            });
+                                        }
+                                        updateTotalSum();
+                                        updateLinkDeliveryBtn();
+                                    };
+
+                                    $('#buy-counter-btn-minus-{{ product['cart_id'] }}').on('click', () => {
+                                        let currentQuantity = parseInt(quantityInputElem.val());
+                                        updateCartIdTotal(currentQuantity - 1);
+                                    });
+                                    $('#buy-counter-btn-plus-{{ product['cart_id'] }}').on('click', () => {
+                                        let currentQuantity = parseInt(quantityInputElem.val());
+                                        updateCartIdTotal(currentQuantity + 1);
+                                    });
+
+                                    $('#fe-cart-item-counter-{{ product['cart_id'] }}').on('change', function(e) {
+                                        let quantity = parseInt(quantityInputElem.val());
+                                        updateCartIdTotal(quantity);
+                                    });
+
+                                    updateTotalSum();
+                                });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="fe-cart-error-message px-3" style="font-size: .8em;">
+
+                        </div>
+
+                        {% if customer_id %}
+                        <div class="text-end">
+                            <button class="btn fe-btn-bordered" id="btn-keep-cart-{{ product['cart_id'] }}">
+                                Отложить
+                            </button>
+                            <script>
+                            $(document).ready(() => {
+                                let cartId = '{{ product['cart_id'] }}';
+                                let btn = $(`#btn-keep-cart-${cartId}`);
+                                let row = $(`#table-row-id-${cartId}`);
+
+                                btn.on('click', () => {
+                                    $.ajax(`index.php?route=fe/api/checkout/fe_cart/copy&cart_id=${cartId}`)
+                                    .done(res => {
+                                        if (res.code == 200) {
+                                            row.animate({
+                                                height: "toggle",
+                                                margin: "0",
+                                                paddingTop: "0",
+                                                paddingBottom: "0"
+                                            }, 600, () => {
+                                                row.remove();
+                                                updateLinkDeliveryBtn();
+                                                updateTotalValue();
+                                            });
+                                        }
+                                    });
+                                });
+                            });
+                            </script>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="row fe-table-header mx-auto">
+                    <div class="col fw-light d-flex py-2">
+                        <div class="d-inline-block text-center m-auto fw-bold">
+                            Оформить заказ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fe-bg-light-blue my-3 p-2">
+                    <div class="row my-4">
+                        <div class="col">
+                            Сумма:
+                        </div>
+
+                        <div class="col text-end">
+                            <span id="fe-cart-total">0</span> тг
+                        </div>
+                        <script>
+                        var updateTotalValue = (total_multiplier = 1) => {
+                          let total = 0;
+                          let cartTotal = $('#fe-cart-total');
+                          let cartRows = $('#fe-cart-row-container').children();
+                          cartRows.find('.fe-cart-price-total').each((k, v) => {
+                            total += Number($(v).html());
+                          });
+
+                          total *= total_multiplier;
+
+                          cartTotal.html(Math.round(total));
+                        };
+
+                        $(document).ready(() => {
+                          updateTotalValue();
+                        });
+                        </script>
+                    </div>
+
+                    <div>
+                        <a id="link-delivery-btn" href="{{ link_checkout }}" class="btn w-100 fe-btn-bordered">
+                            Оформить заказ
+                        </a>
+                        <script type="text/javascript">
+                            var updateLinkDeliveryBtn = () => {
+                                let linkDeliveryBtn = $('#link-delivery-btn');
+                                let f = false;
+
+                                // let feCartQuantityElems = $('#fe-cart-row-container').find('.fe-cart-quantity');
+                                let feCartQuantityElems = $('#fe-cart-row-container').find('.fe-pages-cart-table-row');
+
+                                if (feCartQuantityElems.length === 0) {
+                                    f = true;
+                                }
+
+                                feCartQuantityElems.each((k, v) => {
+                                    let elem = $(v);
+                                    let quantityElem = elem.find('.fe-cart-quantity');
+                                    let quantity = Number(quantityElem.html());
+
+                                    let idPrefix = 'fe-cart-quantity-';
+                                    let cartId = quantityElem.attr('id').substr(idPrefix.length);
+
+                                    let quantityCounterElem = $(`#fe-cart-item-counter-${cartId}`);
+                                    let quantityCounter = Number(quantityCounterElem.val());
+
+                                    {% if customer_type.name != 'business' %}
+                                    if ( !(quantity > 0
+                                        && quantityCounter <= quantity
+                                        && quantityCounter > 0) ) {
+                                        elem.find('.fe-cart-error-message').html("Проверьте заказ. Заказанное количество больше актуального наличия товара. Исправьте количество.");
+                                        elem.addClass('fe-danger');
+                                        f = true;
+                                    } else {
+                                        elem.removeClass('fe-danger');
+                                        elem.find('.fe-cart-error-message').html("");
+                                    }
+                                    {% endif %}
+                                });
+
+                                if (f) {
+                                    linkDeliveryBtn.addClass('d-none');
+                                } else {
+                                    linkDeliveryBtn.removeClass('d-none');
+                                }
+                            };
+
+                            $(document).ready(() => {
+                                updateLinkDeliveryBtn();
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <div class="fe-bg-light-blue my-3 p-2">
+                    <div class="my-1">
+                        Использовать промокод
+                    </div>
+
+                    <div class="my-1">
+                        <input class="form-control" id="feCouponInput" placeholder="Промокод">
+                    </div>
+
+                    <div class="my-1">
+                        <button class="btn w-100 fe-btn-bordered" id="feBtnActivateCoupon">Активировать</button>
+                    </div>
+
+                    <div class="my-1 text-center">
+                        <span id="feCouponMessage"></span>
+                    </div>
+
+                    <script>
+                        var setActiveCoupon = (coupon_code, display_message = true) => {
+                            let link_coupon_api = '{{ link_coupon_api }}';
+                            $.post(link_coupon_api, {coupon: coupon_code})
+                                .done(res => {
+                                    console.log(res);
+                                    let feCouponMessage = $('#feCouponMessage');
+                                    if (display_message) {
+                                        feCouponMessage.text(res.is_coupon_set ?
+                                            "Промокод активирован." :
+                                            "Промокод не является действительным."
+                                        );
+                                    }
+                                    updateTotalValue(res.coupon_price_multiplier);
+                                });
+                        };
+
+                        $(document).ready(() => {
+                            setActiveCoupon('', false);
+                            $('#feBtnActivateCoupon').on('click', () => {
+                                let coupon = $('#feCouponInput').val();
+                                setActiveCoupon(coupon);
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+{{ callback }}
+
+{{ footer }}

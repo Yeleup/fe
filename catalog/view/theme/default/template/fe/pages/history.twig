@@ -1,0 +1,110 @@
+{{ header }}
+
+<main class="">
+    <div class="container mt-3" style="min-height: 75vh;">
+
+        <div class="my-3">
+            <div class="d-inline-block py-2 px-3 mx-2 fe-bin-top-button">
+                <div class="row">
+                    <div class="col">
+                        История заказов
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="row fe-table-header mx-auto">
+                    {% set tb_header = [
+                        'Дата заказа',
+                        'Название',
+                        'Код',
+                        'Цена',
+                        'Колличество',
+                    ] %}
+                    {% for i in tb_header %}
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            {{ i }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% for order in orders %}
+                <div class="fe-bg-light-blue my-3 p-2" id="table-row-id-{{ i }}" style="border: 1px solid #cfcfcf">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="d-flex h-100">
+                                <div class="m-auto">
+                                    {{ order.date_added }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            {% for order_product in order.order_products %}
+                            {% set product = order_product.product %}
+                            <div class="row fe-table-data-row mb-3 gx-0 mx-auto">
+
+                                <div class="col d-flex py-2">
+                                    <div class="d-inline-block text-center m-auto">
+                                        {{ product.name }}
+                                    </div>
+                                </div>
+
+                                <div class="col d-flex py-2">
+                                    <div class="d-inline-block text-center m-auto">
+                                        {{ product.crosscode }}
+                                    </div>
+                                </div>
+
+                                <div class="col d-flex py-2">
+                                    <div class="d-inline-block text-center m-auto">
+                                        {{ order_product.price }}
+                                    </div>
+                                </div>
+
+                                <div class="col d-flex py-2">
+                                    <div class="d-inline-block text-center m-auto">
+                                        {{ order_product.quantity }}
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-3"></div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid" style="background-color: #E1EDFF;">
+        <div class="container p-5">
+            <div class="text-center mb-4">
+                <h4>Есть вопросы? Оставьте свои контакты и мы Вам перезвоним</h4>
+            </div>
+
+            <form action="" method="POST" class="row gx-5">
+                <div class="col">
+                    <input class="form-control rounded-0" type="text" placeholder="Введите имя">
+                </div>
+
+                <div class="col">
+                    <input type="text" class="form-control rounded-0" placeholder="Введите номер">
+                </div>
+
+                <div class="col">
+                    <input type="submit" class="btn btn-primary w-100 rounded-0" value="Отправить">
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+{{ footer }}

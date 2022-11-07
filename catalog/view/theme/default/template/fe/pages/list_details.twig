@@ -1,0 +1,259 @@
+{{ header }}
+
+<style media="screen">
+    @media (max-width: 991.98px) {
+        main * {
+            font-size: 2rem;
+        }
+    }
+    a.fe-product-detail-link {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<style>h1 {color:#333;position:relative;}</style>
+
+<main class="">
+    <div class="container-fluid" style="min-height: 75vh; background-color: #F6FAFF;">
+
+        <div class="row py-5">
+
+            <div class="col-12 col-lg-2">
+
+                <div class="shadow-sm mx-auto w-100" style="background-color: #FFE767; padding: 5px 0;">
+                    <div class="" style="background-color: white;">
+                        <div class="w-100 d-lg-none">
+                            <button type="button" class="btn w-100" name="button" id="subclassListContainerBtn"><span>Показать категории</span></button>
+                            <script type="text/javascript">
+                                $('#subclassListContainerBtn').on('click', () => {
+                                    $('#subclassListContainer').collapse('toggle');
+                                });
+                                $(document).ready(() => {
+                                    if ( $(window).width() < 992 ) {
+                                        $('#subclassListContainer').collapse('hide');
+                                    }
+                                });
+                                $( window ).resize(function () {
+                                    if ( $( window ).width() < 992 ) {
+                                        $('#subclassListContainer').collapse('hide');
+                                    }
+                                    else {
+                                        $('#subclassListContainer').collapse('show');
+                                    }
+                                });
+                            </script>
+                        </div>
+                        <ul class="collapse show list-unstyled my-auto py-3 px-2" id="subclassListContainer">
+                            {% for subcat in prod_subcat %}
+                            <li style="font-size: .8em;">
+                                <div class="row gx-0">
+                                    <div class="col my-auto">
+                                        <a href="{{ subcat.link }}" class="btn">
+                                            <span>{{ subcat.name }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+
+                {% if logged == null %}
+                    <div class="p-3">
+                        {{ product_search }}
+                    </div>
+                {% endif %} 
+
+                <h1>{{ category_name }}</h1>
+
+                    {% if catalogs %}
+                        {% if logged != null %}
+                            <div class="col text-center my-auto">
+                                <iframe class="row" style='width: 100%;height: 800px;' src="https://search.fe.kz/index.php?task=catalogs&client={{ client_category_id }}"></iframe>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                    {% if not products %}
+                        <div class="row h-100" style="border: dashed #6c757d 2px;">
+                            <div class="col text-center my-auto">
+                                <h6 class="text-muted">Ничего не найдено.</h6>
+                            </div>
+                        </div>
+                    {% else %}
+
+                        <div class="row row-cols-1" id="itemContainer">
+                            {% for product in products %}
+                            {# {% if product['quantity'] > 0 %} #}
+                            <div class="col px-3 py-3 fe-search-target-container" id="product-{{ product['product_id'] }}">
+                                <div class="row h-100 px-1 py-3 row-cols-1 row-cols-lg-2" style="background-color: white; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                                    <div class="col">
+                                        <div style="font-size: .8em;">
+                                                <span>
+                                                    {{ product.category }}
+                                                </span>
+                                                <span class="mx-2">
+                                                    {% if product['quantity'] > 0 %}
+                                                        <img src="image/catalog/fe/pages/goods/icon_check.svg" alt="">
+                                                        {% if product['quantity'] < 10 %}
+                                                        В наличии ({{ product['quantity'] }})
+                                                        {% else %}
+                                                        В наличии (10+)
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <span class="text-danger" style="font-weight: 800; font-size: 1.3em">Не имеется на складе.</span>
+                                                    {% endif %}
+
+                                                </span>
+
+                                                <span class="product-cart-quantity d-none text-danger" style="font-size: 1.3em; font-weight: 800;">
+                                                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                                                    <span></span>
+                                                </span>
+                                        </div>
+                                        <div class="row py-3 h-100" style="font-size: 1.2em;">
+                                            <!-- <div class="col-6 my-auto text-center"> -->
+                                            <div>
+                                                <b class="fe-search-target">
+                                                    <a class="fe-product-detail-link" href="{{ link_product_detail }}&product_id={{ product.product_id }}">{{ product['name'] }}</a>
+                                                </b>
+                                            </div>
+                                            <div class="col-6 my-auto text-center">
+                                                {% if product.images %}
+                                                    <img class="img-thumbnail fe-popup-image" src="image/{{ product.images[0].image }}" alt="{{ product['name'] }}">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="font-size: .9em; border-left: 1px solid #ECECEC">
+                                        <div class="row h-50 gx-0">
+                                            <div class="col my-auto">
+                                                <div class="text-muted">
+                                                    Производитель:
+                                                </div>
+                                                <div>
+                                                    {% if product['brand_name'] %}
+                                                        {{ product['brand_name'] }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col my-auto">
+                                                <div class="row align-items-end h-100 gx-0">
+                                                    <div class="col text-center" style="font-size: 1.2em;">
+                                                        <div class="input-group">
+                                                            <button type="button" id="buy-counter-btn-minus-{{ product['product_id'] }}" class="btn btn-secondary" name="button">-</button>
+                                                            <input class="form-control" id="buy-counter-{{ product['product_id'] }}" type="text" value="1">
+                                                            <button type="button" id="buy-counter-btn-plus-{{ product['product_id'] }}" class="btn btn-secondary" name="button">+</button>
+                                                        </div>
+
+                                                        <script>
+                                                            $(document).ready(() => {
+                                                                let productId = '{{ product['product_id'] }}'
+                                                                let counter = $(`#buy-counter-${productId}`);
+                                                                $(`#buy-counter-btn-minus-${productId}`).on('click', function () {
+                                                                    let count = counter.val();
+                                                                    if (count > 1) {
+                                                                        counter.val(parseInt(count) - 1);
+                                                                    }
+                                                                });
+                                                                $(`#buy-counter-btn-plus-${productId}`).on('click', function () {
+                                                                    let count = counter.val();
+                                                                    counter.val(parseInt(count) + 1);
+                                                                });
+                                                            });
+                                                        </script>
+                                                    </div>
+
+                                                    <div class="col text-center">
+                                                        {{ product['price']|round(0, 'floor') }} тг
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row h-50 gx-0">
+                                            <div class="col my-auto">
+                                                <div class="text-muted">
+                                                    Номер детали:
+                                                </div>
+                                                <div>
+                                                {% if product['crosscode'] %}
+                                                    {{ product['crosscode'] }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col my-auto">
+                                                <button id="add-to-cart-btn-{{ product['product_id'] }}" class="btn fe-btn-bordered w-100">
+                                                    <span>Добавить в корзину</span>
+                                                </button>
+                                                <script>
+                                                $(document).ready(() => {
+                                                    let productId = '{{ product['product_id'] }}';
+                                                    let btnId = `#add-to-cart-btn-${productId}`;
+                                                    let btn = $(btnId);
+                                                    btn.on('click', () => {
+                                                        let quantity = $(`#buy-counter-${productId}`).val();
+                                                        $.ajax({
+                                                            url: 'index.php?route=checkout/cart/add',
+                                                            method: 'POST',
+                                                            data: {
+                                                                product_id: productId,
+                                                                quantity: quantity
+                                                            }
+                                                        })
+                                                            .done(res => {
+                                                                feCartUpdatedEventEmitter.emit();
+                                                                console.log(res);
+                                                            });
+                                                        // cart.add(productId, quantity);
+                                                    });
+                                                });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {# {% endif %} #}
+                            {% endfor %}
+                        </div>
+
+                        <script type="text/javascript">
+                            $(document).ready(() => {
+                                let updateItemCartQuantity = function() {
+                                    $.ajax('index.php?route=fe/api/checkout/cart/getProducts')
+                                        .done(res => {
+                                            res.products.forEach((item, i) => {
+                                                let product_id = item.product_id;
+                                                let quantity = item.quantity;
+                                                let product_container = $(`#product-${product_id}`);
+                                                product_container.find('.product-cart-quantity').removeClass('d-none');
+                                                product_container.find('.product-cart-quantity').find('span').html(`${quantity}`);
+                                            });
+                                        });
+                                };
+                                feCartUpdatedEventEmitter.subscribe(updateItemCartQuantity);
+                                updateItemCartQuantity();
+                            });
+                        </script>
+
+                        <div class="fe">
+                            {{ pagination }}
+                        </div> 
+                    {% endif %}
+                    {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+{{ footer }}

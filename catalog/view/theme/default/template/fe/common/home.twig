@@ -1,0 +1,433 @@
+{{ header }}
+
+<main class="">
+    <!-- Top -->
+    <div class="container-fluid position-relative" style="background: center url('image/catalog/fe/static/home/top_bg.webp'); background-size:cover;">
+        <div style="left:0; width: 100%; height: 100%; position: absolute; background: linear-gradient(180deg, #FFFFFF 0%, rgba(58, 101, 159, 0.2) 100%); backdrop-filter: blur(7px);"></div>
+
+        <div class="container-fluid position-relative" style="padding: 50px 0;">
+            {{ search_bar }}
+            {{ search_laximo }}
+
+            <!-- Banner -->
+            <div class="container-fluid p-3">
+                <div class="splide row" id="splideBanners">
+
+                    <div class="col-1 my-auto text-center">
+                        <button class="btn" id="banners-btn-prev">
+                            <img src="image/catalog/fe/static/home/arrow_prev.svg" alt="">
+                        </button>
+                    </div>
+
+                    <div class="splide__track col-10 mx-auto">
+                        <ul class="splide__list">
+                            {% set banners = [
+                                'image/catalog/fe/static/home/banners/4.png',
+                                'image/catalog/fe/static/home/banners/7.jpg',
+                                'image/catalog/fe/static/home/banners/5.png',
+                                'image/catalog/fe/static/home/banners/2.webp',
+                                'image/catalog/fe/static/home/banners/3.webp',
+                            ] %}
+
+                            {% for banner in banners %}
+                            <li class="splide__slide px-3 d-flex">
+                                <div class="mx-auto h-100 row">
+                                    <div class="col my-auto">
+                                        <img class="w-100" src="{{ banner }}" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="col-1 my-auto text-center">
+                        <button class="btn" id="banners-btn-next">
+                            <img src="image/catalog/fe/static/home/arrow_next.svg" alt="">
+                        </button>
+                    </div>
+
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var splide = new Splide('#splideBanners', {
+                            type: 'loop',
+                            perPage: 1,
+                            perMove: 1,
+                            autoplay: true,
+                            arrows: false,
+                        });
+                        splide.mount();
+                        $('#banners-btn-prev').on('click', function () {
+                            splide.go('-1');
+                        });
+                        $('#banners-btn-next').on('click', function () {
+                            splide.go('+1');
+                        });
+                        $( window ).resize(function () {
+                            if ( $( window ).width() < 768 ) {
+                                splide.options = {
+                                    perPage: 1,
+                                };
+                            }
+                            else {
+                                splide.options = {
+                                    perPage: 1,
+                                };
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <!-- Banner End -->
+
+            {% if customer_id %}
+            <div class="container-fluid">
+                <div class="text-center">
+                    <h4 class="text-uppercase pt-5 pb-3">поиск по каталогам</h4>
+                </div>
+
+                <ul class="list-inline text-center">
+                    {% for catalog_icon in catalog_icons %}
+                    <li class="list-inline-item d-inline-flex">
+                        <a href="{{ catalog_icon['href'] }}">
+                            <img class="px-5 m-3" height="100px" style="border-radius: 20px;background: rgba(255, 255, 255, 0.8);" src="{{ catalog_icon['img'] }}">
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="container mt-5 fe-subcat-container">
+                <div class="text-center">
+                    <h4 class="text-uppercase pt-5 pb-3">Дополнительные товары</h4>
+                </div>
+
+                <div class="row row-cols-1 row-cols-lg-5 justify-content-center p-2" style="font-size: .8em; border-radius: 20px;background: rgba(255, 255, 255, 0.8);">
+                    {% for subcat in prod_subcat %}
+                    <div class="col text-center my-auto">
+                        <a href="{{ subcat.link }}" class="btn">
+                            <span class="text-uppercase">
+                                <img height="40px" src="image/catalog/fe/static/home/cat_icons/{{ loop.index }}.png" alt="">
+                                {{ subcat['name'] }}
+                            </span>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div>
+                <br><br><br>
+            </div>
+        </div>
+
+    </div>
+    <!-- End Top -->
+
+    <!-- Brands -->
+    <div class="container-fluid mb-5 pb-5">
+        <div class="text-center">
+            <h4 class="text-uppercase p-5">бренды автозапчастей</h4>
+            <div class="container-lg">
+                <div class="splide row" id="splideBrands">
+
+                    <div class="col-1 my-auto">
+                        <button class="btn" id="brands-btn-prev">
+                            <img src="image/catalog/fe/static/home/arrow_prev.svg" alt="">
+                        </button>
+                    </div>
+
+                    <div class="splide__track col-10 mx-auto">
+                        <ul class="splide__list">
+                            {% set brands = [
+                                'image/catalog/fe/static/home/brands/brand1.png',
+                                'image/catalog/fe/static/home/brands/brand2.png',
+                                'image/catalog/fe/static/home/brands/brand3.png',
+                                'image/catalog/fe/static/home/brands/brand4.png',
+                                'image/catalog/fe/static/home/brands/brand5.png',
+                            ] %}
+
+                            {% for brand in brands %}
+                            <li class="splide__slide px-3 d-flex">
+                                <div class="mx-auto h-100 row py-2" style="background-color: white;">
+                                    <div class="col my-auto">
+                                        <img class="w-100" src="{{ brand }}" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="col-1 my-auto">
+                        <button class="btn" id="brands-btn-next">
+                            <img src="image/catalog/fe/static/home/arrow_next.svg" alt="">
+                        </button>
+                    </div>
+
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var splide = new Splide('#splideBrands', {
+                            type: 'loop',
+                            perPage: ($( window ).width() < 992 ? 2 : 4),
+                            perMove: 1,
+                            autoplay: true,
+                            arrows: false,
+                        });
+                        splide.mount();
+                        $('#brands-btn-prev').on('click', function () {
+                            splide.go('-1');
+                        });
+                        $('#brands-btn-next').on('click', function () {
+                            splide.go('+1');
+                        });
+                        $( window ).resize(function () {
+                            if ( $( window ).width() < 992 ) {
+                                splide.options = {
+                                    perPage: 2,
+                                };
+                            }
+                            else {
+                                splide.options = {
+                                    perPage: 4,
+                                };
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <!-- End Brands -->
+
+    {# Advantages #}
+    <div class="container-lg">
+        <div class="text-center">
+            <h1 style="margin-bottom: 40px;">Пятый элемент</h1>
+            <h4 class="text-uppercase">
+                наши преимущества
+            </h4>
+        </div>
+        <div class="container" style="padding: 40px 0;">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="row row-cols-1 row-cols-lg-3">
+                        {% set adv_icons = [
+                            {src: 'image/catalog/fe/static/home/advantages/1.png', text: 'прямые поставки с завода изготовителя'},
+                            {src: 'image/catalog/fe/static/home/advantages/2.png', text: 'гарантия качества всех товаров'},
+                            {src: 'image/catalog/fe/static/home/advantages/3.png', text: 'акции и скидки для постоянных клиентов'},
+                        ] %}
+                        {% for adv_icon in adv_icons %}
+                        <div class="col">
+                            <div>
+                                <img class="w-100" src="{{ adv_icon.src }}" alt="">
+                            </div>
+                            <div class="text-center">
+                                <span class="text-uppercase">
+                                    {{ adv_icon.text }}
+                                </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# End Advantages #}
+
+    {# Stats #}
+    <div class="container-fluid py-4">
+        <div class="text-center w-50 mx-auto">
+            <h4 class="text-uppercase p-3">
+                магазин пятый элемент занимает лидерские позиции на рынке интернет-торговли автозапчастями в казахстане
+            </h4>
+        </div>
+        <div class="container-lg">
+            <div class="row row-cols-sm-1 row-cols-md-2">
+                <div class="col">
+                    <div class="row justify-content-center h-100">
+                        <div class="col-8 d-flex">
+                            <ul class="list-unstyled my-auto">
+                                {% set stats_text = [
+                                    'Выбор товаров по брендам, ценам: запчасти для корейских и японских автомобилей',
+                                    'Подтвержденное качество товара,наличие гарантии',
+                                    "Доставка до дверей или на СТО в городе Алматы - #{delivery_price} тг",
+                                    'Приглашаем к сотрудничеству оптовых покупателей',
+                                ] %}
+                                {% for text in stats_text %}
+                                    <li class="d-flex my-5">
+                                        <i class="fas fa-circle my-auto" style="color: #2C5183;"></i>
+                                        <span style="padding-left: 10px;">{{ text }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="row justify-content-center h-100">
+                        <div class="col-8 d-flex">
+                            <ul class="list-unstyled my-auto">
+                                {% set stats_text = [
+                                    {numbers: '37 222', text: 'довольных клиентов'},
+                                    {numbers: '15 000', text: 'наименований запчастей'},
+                                    {numbers: '2 500', text: 'деталей в день'},
+                                ] %}
+                                {% for text in stats_text %}
+                                    <li class="my-5">
+                                        <div>
+                                            <b style="font-size: 2.5em; color: #2C5183;">{{ text.numbers }}</b>
+                                        </div>
+                                        <div>
+                                            <span>{{ text.text }}</span>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {# End Stats #}
+
+    {# Client Reviews #}
+    <div class="container-fluid" style="background-color: #F6FAFF; padding: 40px 0;">
+        <div class="container-lg">
+            <div class="text-center">
+                <h4 class="p-3 text-uppercase">
+                    отзывы наших клиентов
+                </h4>
+            </div>
+            <div class="container-lg">
+                <div class="splide row" id="splideReviews">
+
+                    <div class="col-1 my-auto">
+                        <button class="btn" id="reviews-btn-prev">
+                            <img src="image/catalog/fe/static/home/arrow_prev.svg" alt="">
+                        </button>
+                    </div>
+
+                    <div class="splide__track col-10 mx-auto">
+                        <ul class="splide__list">
+                            {% set reviews = [
+                                {
+                                    score: 5,
+                                    text: 'Всегда выгодно и качественно. Отзывчивые и дружелюбные. Отвечают быстро и профессионально даже по ватсапу)',
+                                },
+                                {
+                                    score: 5,
+                                    text: 'Ребята молодцы, всегда четко работают менеджеры. Иван, Cлава самые опытные по запчастям!',
+                                },
+                                {
+                                    score: 4,
+                                    text: 'Хорошая слаженная командная работа.Ребята все, просто Молодцы! Как ни обратишься, всегда приветливые,отзывчивые где что непонятно всегда с охотой объяснят, что к чему.По запчастям проблем нет, всегда всё находится.Спасибо всем!!!',
+                                },
+                                {
+                                    score: 5,
+                                    text: 'Всегда выгодно и качественно. Отзывчивые и дружелюбные. Отвечают быстро и профессионально даже по ватсапу)',
+                                },
+                            ] %}
+                            {% for review in reviews %}
+                            <li class="splide__slide px-3 d-flex">
+                                <div class="h-100 row py-2" style="background-color: white;">
+                                    <div class="text-end">
+                                        <span>
+                                            {% for star in 1..review.score %}
+                                            <i class="fas fa-star" style="color: #FFE767;"></i>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                    <div class="text-center p-3 my-auto">
+                                        <p>{{ review.text }}</p>
+                                    </div>
+                                    <div class="col align-self-end text-end">
+                                        <span class="text-muted">
+                                            Отзыв из 2Gis
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="col-1 my-auto">
+                        <button class="btn" id="reviews-btn-next">
+                            <img src="image/catalog/fe/static/home/arrow_next.svg" alt="">
+                        </button>
+                    </div>
+
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var splide = new Splide('#splideReviews', {
+                            type: 'loop',
+                            perPage: ($( window ).width() < 768 ? 1 : 2),
+                            perMove: 1,
+                            autoplay: true,
+                            arrows: false,
+                        });
+                        splide.mount();
+                        $('#reviews-btn-prev').on('click', function () {
+                            splide.go('-1');
+                        });
+                        $('#reviews-btn-next').on('click', function () {
+                            splide.go('+1');
+                        });
+                        $( window ).resize(function () {
+                            if ( $( window ).width() < 768 ) {
+                                splide.options = {
+                                    perPage: 1,
+                                };
+                            }
+                            else {
+                                splide.options = {
+                                    perPage: 2,
+                                };
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    {# End Client Reviews #}
+
+    <!-- Bottom Map -->
+    <div class="d-flex">
+        <div style="width:100%;height:500px;">
+            <img class="h-100 w-100" src="image/catalog/fe/static/home/map.png" alt="">
+        </div>
+        <!-- <div id="googleMap" style="width:100%;height:500px;"></div> -->
+
+        <!-- <script>
+            function myMap() {
+                var mapProp= {
+                    center:new google.maps.LatLng(43.24421678140024, 76.89058859336696),
+                    zoom: 18,
+                    disableDefaultUI: true,
+                };
+                var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+                var marker1 = new google.maps.Marker({
+                    position: { lat: 43.24421678140024, lng: 76.89058859336696 }
+                });
+                marker1.setMap(map);
+            }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ config_map_api_key }}&callback=myMap"></script> -->
+    </div>
+    <!-- End Bottom Map -->
+
+</main>
+
+{{ footer }}

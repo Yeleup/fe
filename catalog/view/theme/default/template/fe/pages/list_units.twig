@@ -1,0 +1,77 @@
+{{ header }}
+
+<main class="">
+    <div class="container-fluid" style="min-height: 400px; background-color: #F6FAFF;">
+
+        <div class="row py-5">
+
+            <div class="col-sm-12 col-md-2">
+                <div class="shadow-sm mx-auto w-100" style="background-color: #FFE767; padding: 5px 0;">
+                    <div class="d-flex" style="background-color: white;">
+                        <ul class="list-unstyled my-auto py-3 px-2">
+                            {% set left_icons = [
+                                {src: '1', text: 'Дворники'},
+                                {src: '2', text: 'Масла'},
+                                {src: '3', text: 'Лампочки, ветровики, мухобойки'},
+                                {src: '4', text: 'Акционные товары'},
+                            ] %}
+                            {% for i in left_icons %}
+                            <li style="font-size: .8em;">
+                                <div class="row gx-0">
+                                    <div class="col-3 my-auto text-center">
+                                        <img class="w-50" src="image/catalog/fe/pages/goods/icon{{ i.src }}.png" alt="">
+                                    </div>
+                                    <div class="col my-auto">
+                                        <span>{{ i.text }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                {{ product_search }}
+                <div class="row row-cols-sm-1 row-cols-md-2" id="itemContainer">
+                    {% for product in products %}
+                    <div class="col px-3 py-3 fe-search-target-container" id="itemExample">
+                        <div class="p-3 h-100" style="background-color: white; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                            <div class="row px-1 py-3">
+                                <div class="col">
+                                    <div class="row py-3 h-100" style="font-size: 1.2em;">
+                                        <div class="col-6 my-auto text-center">
+                                            <b class="fe-search-target">
+                                                {{ product.description|capitalize }}
+                                            </b>
+                                        </div>
+                                        <div class="col-6 my-auto text-center">
+                                            <div class="p-3">
+                                                <a
+                                                {% if product.link_details %}
+                                                    href="{{ product.link_details }}"
+                                                {% else %}
+                                                    href="index.php?route=fe/pages/list_details&vehicle_id={{ vehicle_id }}&unit_id={{ product.id }}"
+                                                {% endif %}
+                                                class="btn btn-primary w-100">
+                                                    Детали
+                                                </a>
+                                            </div>
+                                            <div class="mx-auto" style="height: 200px; width: 200px; background: url('{{ product.image_url }}') center; background-size: cover;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+{{ footer }}

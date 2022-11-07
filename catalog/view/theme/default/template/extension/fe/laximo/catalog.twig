@@ -1,0 +1,175 @@
+{{ deps }}
+<div class="container">
+
+    <div class="row row-cols-4 w-100 laximo-container" id="laximoCatalogList">
+    </div>
+
+    <div class="laximo-container w-100" id="laximoGetWizard2">
+        <div class="py-3">
+            <button class="btn btn-sm btn-outline-secondary laximo__btn-back">Список каталогов</button>
+        </div>
+        <div class="laximo__item-container">
+
+        </div>
+        <div id="FindVehicleByWizard2BtnContainer" class="py-3">
+            <button type="button" data-link="" class="btn btn-primary w-100" id="FindVehicleByWizard2Container" name="button">Найти автомобили</button>
+        </div>
+    </div>
+
+    <div class="laximo-container row-cols-1 w-100 row" id="laximoFindVehicles">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            let laximoContainer = $('.laximo-container');
+            let catalogContainer = $('#laximoCatalogList');
+            let getWizard2Container = $('#laximoGetWizard2');
+            let FindVehicleByWizard2Container = $('#laximoFindVehicles');
+
+            let visToggleTime = 500;
+
+            $('#FindVehicleByWizard2BtnContainer button').on('click', function () {
+                $.ajax($(this).attr('data-link'))
+                    .done(res => {
+                        // console.log(res);
+
+                        res.row.forEach((item, i) => {
+                            let template = $(`
+                            <div class="col card">
+                                <div class="card-body"></div>
+                            </div>
+                            `);
+
+                            template.find('.card-body').append(`<h5 class="card-title">${item['@attributes'].brand} ${item['@attributes'].name}</h5>`);
+                            template.find('.card-body').append(`<p class="card-text"></p>`);
+
+                            console.log(item);
+                            if (!Array.isArray(item.attribute)) {
+                                item.attribute = [item.attribute['@attributes']];
+                            }
+
+                            item.attribute.forEach((item2, i2) => {
+                                if (item2['@attributes'].key == 'options') {
+                                    let options = item2['@attributes'].value.split(';');
+                                    options.forEach((item3, i3) => {
+                                        let s = item3.split(':');
+                                        template.find('.card-text').append(`<div><b>${s[0]}</b> ${s[1]}</div>`);
+                                    });
+                                    return;
+                                }
+                                template.find('.card-text').append(`<div><b>${item2['@attributes'].name}</b> ${item2['@attributes'].value}</div>`);
+                            });
+
+                            template.find('.card-body').append(`<div><a class="btn btn-link" href="{{ link_quick_group }}&url=${btoa(item._links.ListQuickGroup)}">Показать категории узлов</a></div>`);
+
+                            FindVehicleByWizard2Container.append(template);
+                        });
+
+                    })
+                    .always((xhr, status) => {
+                        laximoContainer.hide(visToggleTime, () => {
+                            FindVehicleByWizard2Container.show(visToggleTime);
+                        });
+                    });
+            });
+
+            laximoContainer.hide();
+
+            getWizard2Container.find('.laximo__btn-back').on('click', () => {
+                laximoContainer.hide(visToggleTime);
+                catalogContainer.show(visToggleTime);
+            });
+
+            let setGetWizard2FindVehicleBtn = function(value) {
+                let btn = $('#FindVehicleByWizard2BtnContainer button');
+                btn.attr('data-link', value);
+                if (value) {
+                    btn.show(visToggleTime);
+                } else {
+                    btn.hide(visToggleTime);
+                }
+            }
+            setGetWizard2FindVehicleBtn('');
+
+            let getWizard2 = function(url) {
+                getWizard2Container.find('.laximo__item-container').empty();
+                $.ajax(url)
+                    .done(res => {
+                        res.row.forEach((item, i) => {
+                            let attrName = item['@attributes'].name;
+                            let conditionId = item['@attributes'].conditionid;
+                            let template = $(`
+                            <div class="form-group">
+                            <label for="getWizard2Select${conditionId}" class="form-label mt-4">${attrName}</label>
+                            <select class="form-select" id="getWizard2Select${conditionId}">
+                                <option value="">--</option>
+                            </select>
+                            </div>
+                            `);
+
+                            item.options.row.forEach((item2, i2) => {
+                                template.find('select').append(`
+                                    <option value="${item2._links.GetWizard2}" data-link-find-vehicle="${item2._links.FindVehicleByWizard2}">
+                                        ${item2['@attributes'].value}
+                                    </option>
+                                `);
+                            });
+
+                            template.find('select').on('change', () => {
+                                let nextStep = template.find('select').val();
+                                let findVehicle = template.find('select :selected').attr('data-link-find-vehicle');
+
+                                setGetWizard2FindVehicleBtn(findVehicle);
+                                getWizard2(nextStep);
+                            });
+
+                            getWizard2Container.find('.laximo__item-container').append(template);
+                        });
+                    })
+                    .always((xhr, status) => {
+                    });
+                laximoContainer.hide(visToggleTime, function () {
+                    getWizard2Container.show(visToggleTime);
+                });
+            };
+
+            $.ajax('{{ link_catalog_list }}')
+                .done(res => {
+                    let whitelistedItems = [
+                        'GM_C201809', 'GM_D201809',
+                        'HONDA2017', 'HYW201905', 'INFINITI201809', 'KIA201903',
+                        'LEXUS00', 'MAZDA2020', 'MMC202002', 'NISSAN201809',
+                        'PO606', 'GM_R201809', 'RENAULT201910', 'SY201502',
+                        'SUBARU201802', 'SUZUKI201402', 'TOYOTA00', 'VW1394'
+                    ];
+
+                    let catalog = res.row;
+                    catalog = catalog.filter((it) => {
+                        return whitelistedItems.includes(it['@attributes'].code);
+                    });
+
+                    catalog.forEach((item, i) => {
+                        catalogContainer.append(`
+                            <div class="col">
+                                <button class="btn btn-link w-100" data-fe-link="${item._links.GetWizard2}">
+                                    ${item['@attributes'].name}
+                                </button>
+                            </div>
+                        `);
+                    });
+                })
+                .always((xhr, status) => {
+                    catalogContainer.show(visToggleTime);
+                    catalogContainer.find('button').each(function (i) {
+                        let btn = $(this);
+                        btn.on('click', function() {
+                            getWizard2(btn.attr('data-fe-link'));
+                        });
+                    });
+                });
+
+
+        });
+    </script>
+
+</div>

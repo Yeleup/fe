@@ -1,0 +1,70 @@
+{{ header }}
+<main style="min-height: 75vh;">
+
+    <div class="container w-50 mx-auto">
+
+        <style media="screen">
+            form.fe-account-form {
+                background-color: #f8f8f8;
+            }
+        </style>
+
+        <form class="p-3 row row-cols-2 fe-account-form" action="{{ action_add }}" method="post">
+            <div class="mb-3 col">
+                <label for="region" class="form-text">Область</label>
+                <input id="region" name="region" class="form-control rounded-0" type="text" placeholder="Введите область">
+            </div>
+            <div class="mb-3 col">
+                <label for="town" class="form-text">Город</label>
+                <input id="town" name="town" class="form-control rounded-0" type="text" placeholder="Введите город">
+            </div>
+            <div class="mb-3 col">
+                <label for="street" class="form-text">Улица</label>
+                <input id="street" name="street" class="form-control rounded-0" type="text" placeholder="Введите улицу">
+            </div>
+            <div class="mb-3 col">
+                <label for="house" class="form-text">Дом</label>
+                <input id="house" name="house" class="form-control rounded-0" type="text" placeholder="Введите номер дома">
+            </div>
+            <div class="mb-3 col">
+                <label for="entrance" class="form-text">Подъезд</label>
+                <input id="entrance" name="entrance" class="form-control rounded-0" type="text" placeholder="Введите номер подъезда">
+            </div>
+            <div class="mb-3 col">
+                <label for="apartment" class="form-text">Квартира</label>
+                <input id="apartment" name="apartment" class="form-control rounded-0" type="text" placeholder="Введите номер квартиры">
+            </div>
+            <button type="submit" name="submit" value="submit" class="btn btn-primary w-100">Добавить Адрес</button>
+        </form>
+
+        {% if addresses %}
+        <div class="container p-3">
+            <h5 class="text-center">Адреса</h5>
+            <ul class="list-group">
+                {% for address in addresses %}
+                <li class="list-group-item">
+                    <span>
+                        {{ address.region }}
+                        {{ address.town }}
+                        {{ address.street }}
+                        {{ address.house }}
+                        {{ address.entrance }}
+                        {{ address.apartment }}
+                    </span>
+                    <form class="float-end" action="{{ action_delete }}" method="post">
+                        <input type="hidden" name="address_id" value="{{ address.id }}">
+                        <button class="btn btn-danger" type="submit" name="button">Удалить</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </div>
+
+</main>
+
+
+
+{{ footer }}

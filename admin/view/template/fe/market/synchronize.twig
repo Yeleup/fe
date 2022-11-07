@@ -1,0 +1,374 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <script type="text/javascript">
+        var feSyncCreatePopup = (message, type) => {
+            $('.alert-dismissible').remove();
+
+            if (type == 'success') {
+                $('#content > .container-fluid')
+                    .prepend(`
+                    <div class="alert alert-success alert-dismissible">
+                        <i class="fa fa-check-circle"></i>
+                        ${message}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                    `);
+            } else {
+                $('#content > .container-fluid')
+                    .prepend(`
+                    <div class="alert alert-danger alert-dismissible">
+                        <i class="fa fa-exclamation-circle"></i>
+                        ${message}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                    `);
+            }
+        };
+    </script>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ lang_heading_title }}</h1>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ lang_heading_title }}</h3>
+        </div>
+
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td>
+                    Название
+                  </td>
+                  <td class="text-right">
+                    Действие
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+
+                <!-- Synchronize All -->
+                <tr>
+                  <td>
+                    Синхронизировать Все
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-all">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $('#btn-synchronize-all').on('click', () => {
+                    let user_token = '{{ user_token }}';
+                    $.ajax({
+                      url: `index.php?route=fe/api/market_starter/all&user_token=${user_token}`,
+                      beforeSend: () => {
+                        $('#btn-synchronize-all').button('loading');
+                      },
+                      complete: () => {
+                        $('#btn-synchronize-all').button('reset');
+                      },
+                      success: (json) => {
+                        if (json['code'] === 200) {
+                            feSyncCreatePopup(json['message'], 'success');
+                        } else {
+                            feSyncCreatePopup(json['message'], 'error');
+                        }
+                      },
+                      error: () => {
+                        console.log('error');
+                      }
+                    });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Category -->
+                <tr>
+                  <td>
+                    Синхронизировать Категории
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-category">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                      let btn = $('#btn-synchronize-category');
+                      btn.on('click', () => {
+                          let user_token = '{{ user_token }}';
+                          $.ajax({
+                              url: `index.php?route=fe/api/market_starter/category&user_token=${user_token}`,
+                              beforeSend: () => {
+                                  btn.button('loading');
+                              },
+                              complete: () => {
+                                  btn.button('reset');
+                              },
+                              success: (json) => {
+                                  if (json['code'] === 200) {
+                                      feSyncCreatePopup(json['message'], 'success');
+                                  } else {
+                                      feSyncCreatePopup(json['message'], 'error');
+                                  }
+                              },
+                              error: () => {
+                                  console.log('error');
+                              }
+                          });
+                      });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Brands -->
+                <tr>
+                  <td>
+                    Синхронизировать Брэнды
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-brand">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                      let btn = $('#btn-synchronize-brand');
+                      btn.on('click', () => {
+                          let user_token = '{{ user_token }}';
+                          $.ajax({
+                              url: `index.php?route=fe/api/market_starter/brand&user_token=${user_token}`,
+                              beforeSend: () => {
+                                  btn.button('loading');
+                              },
+                              complete: () => {
+                                  btn.button('reset');
+                              },
+                              success: (json) => {
+                                  if (json['code'] === 200) {
+                                      feSyncCreatePopup(json['message'], 'success');
+                                  } else {
+                                      feSyncCreatePopup(json['message'], 'error');
+                                  }
+                              },
+                              error: () => {
+                                  console.log('error');
+                              }
+                          });
+                      });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Products -->
+                <tr>
+                  <td>
+                    Синхронизировать Продукты
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-product">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                      let btn = $('#btn-synchronize-product');
+                      btn.on('click', () => {
+                          let user_token = '{{ user_token }}';
+                          $.ajax({
+                              url: `index.php?route=fe/api/market_starter/product&user_token=${user_token}`,
+                              beforeSend: () => {
+                                  btn.button('loading');
+                              },
+                              complete: () => {
+                                  btn.button('reset');
+                              },
+                              success: (json) => {
+                                  if (json['code'] === 200) {
+                                      feSyncCreatePopup(json['message'], 'success');
+                                  } else {
+                                      feSyncCreatePopup(json['message'], 'error');
+                                  }
+                              },
+                              error: () => {
+                                  console.log('error');
+                              }
+                          });
+                      });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Price -->
+                <tr>
+                  <td>
+                    Синхронизировать Цены
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-price">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                      let btn = $('#btn-synchronize-price');
+                      btn.on('click', () => {
+                          let user_token = '{{ user_token }}';
+                          $.ajax({
+                              url: `index.php?route=fe/api/market_starter/priceAll&user_token=${user_token}`,
+                              beforeSend: () => {
+                                  btn.button('loading');
+                              },
+                              complete: () => {
+                                  btn.button('reset');
+                              },
+                              success: (json) => {
+                                  if (json['code'] === 200) {
+                                      feSyncCreatePopup(json['message'], 'success');
+                                  } else {
+                                      feSyncCreatePopup(json['message'], 'error');
+                                  }
+                              },
+                              error: () => {
+                                  console.log('error');
+                              }
+                          });
+                      });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Balance -->
+                <tr>
+                  <td>
+                    Синхронизировать Количество
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-balance">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                      let btn = $('#btn-synchronize-balance');
+                      btn.on('click', () => {
+                          let user_token = '{{ user_token }}';
+                          $.ajax({
+                              url: `index.php?route=fe/api/market_starter/balance&user_token=${user_token}`,
+                              beforeSend: () => {
+                                  btn.button('loading');
+                              },
+                              complete: () => {
+                                  btn.button('reset');
+                              },
+                              success: (json) => {
+
+                                  if (json['code'] === 200) {
+                                      feSyncCreatePopup(json['message'], 'success');
+                                  } else {
+                                      feSyncCreatePopup(json['message'], 'error');
+                                  }
+                              },
+                              error: () => {
+                                  console.log('error');
+                              }
+                          });
+                      });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Crosscode -->
+                <tr>
+                  <td>
+                    Синхронизировать Кросскоды
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-primary" id="btn-synchronize-crosscode">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                      let btn = $('#btn-synchronize-crosscode');
+                      btn.on('click', () => {
+                          let user_token = '{{ user_token }}';
+                          $.ajax({
+                              url: `index.php?route=fe/api/market_starter/crosscode&user_token=${user_token}`,
+                              beforeSend: () => {
+                                  btn.button('loading');
+                              },
+                              complete: () => {
+                                  btn.button('reset');
+                              },
+                              success: (json) => {
+                                  if (json['code'] === 200) {
+                                    feSyncCreatePopup(json['message'], 'success');
+                                  } else {
+                                    feSyncCreatePopup(json['message'], 'error');
+                                  }
+                              },
+                              error: () => {
+                                  console.log('error');
+                              }
+                          });
+                      });
+                  });
+                  </script>
+                </tr>
+
+                <!-- Synchronize Laximo -->
+                {# <tr>
+                  <td>
+                    Синхронизировать Laximo
+                  </td>
+                  <td class="text-right">
+                    <input type="text" value="10000" id="input-synchronize-laximo" />
+                    <button class="btn btn-primary" id="btn-synchronize-laximo">
+                      <i class="fa fa-play"></i>
+                    </button>
+                  </td>
+                  <script>
+                  $(document).ready(() => {
+                    $('#btn-synchronize-laximo').on('click', () => {
+                      let user_token = '{{ user_token }}';
+                      let limit = $('#input-synchronize-laximo').val();
+                      $.ajax({
+                        url: `index.php?route=fe/api/laximo_starter/synchronize&user_token=${user_token}&limit=${limit}`,
+                        beforeSend: () => {
+                          $('#btn-synchronize-laximo').button('loading');
+                        },
+                        complete: () => {
+                          $('#btn-synchronize-laximo').button('reset');
+                        },
+                        success: (json) => {
+                          $('.alert-dismissible').remove();
+
+                          if (json['code'] === 200) {
+                            $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                          } else {
+                            $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                          }
+                        },
+                        error: () => {
+                          console.log('synchronize-laximo error');
+                        }
+                      });
+                    });
+                  });
+                  </script>
+                </tr> #}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

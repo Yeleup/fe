@@ -1,0 +1,131 @@
+<div class="modal fade" id="modalRegisterLegal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="text-end p-1">
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn rounded-0 fw-bolder" data-bs-toggle="modal" data-bs-target="#modalLogin" style="color: #0575C0;">
+                            Вход
+                        </button>
+
+                        <span class="btn rounded-0 fw-bolder" style="background: #0575C0; color: white; cursor: default;">
+                            Регистрация
+                        </span>
+                    </div>
+
+                    <form action="{{ action_register }}" method="post" enctype="multipart/form-data">
+                        <input type="radio" name="customer_group_id" class="d-none" checked="checked" value="1">
+                        <input type="radio" name="newsletter" class="d-none" checked="checked" value="0">
+                        <input type="radio" name="agree" class="d-none" checked="checked" value="1">
+
+                        <div class="row py-3 px-5 row-cols-md-2 row-cols-sm-1">
+                            <div class="col">
+                                <label class="form-text">Выберите тип регистарации<span class="text-danger">*</span></label>
+                                <select name="reg_type" class="form-select rounded-0 reg-type-sel">
+                                    <option value="retail" selected>Розничный</option>
+                                    <option value="wholesale">Оптовый</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="status" class="form-text">Статус<span class="text-danger">*</span></label>
+                                <select name="status" id="registerLegalContinueType" class="form-select rounded-0">
+                                    <option value="legal" selected>Юридическое лицо</option>
+                                    <option value="physical">Физическое лицо</option>
+                                </select>
+
+                                <script>
+                                    $( document ).ready(function () {
+                                        let select = $('#registerLegalContinueType');
+                                        select.change(function () {
+                                            if (select.val() !== 'legal') {
+                                                $('#modalRegisterLegal').modal('hide');
+                                                select.val('legal');
+                                                $('#modalRegisterPhysical').modal('show');
+                                            }
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="row py-3 px-5 row-cols-md-2 row-cols-sm-1">
+                            <div class="col">
+
+                                <div class="py-2">
+                                    <label for="firstName" class="form-text">Имя<span class="text-danger">*</span></label>
+                                    <input name="firstname" id="firstName" class="form-control rounded-0" type="text" placeholder="Введите имя">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="firstName" class="form-text">Фамилия<span class="text-danger">*</span></label>
+                                    <input name="lastname" id="firstName" class="form-control rounded-0" type="text" placeholder="Введите фамилию">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="firstName" class="form-text">Номер телефона<span class="text-danger">*</span></label>
+                                    <input name="telephone" id="firstName" class="form-control rounded-0" type="text" placeholder="Введите номер телефона">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="firstName" class="form-text">Email<span class="text-danger">*</span></label>
+                                    <input name="email" id="firstName" class="form-control rounded-0" type="email" placeholder="Введите email">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="firstName" class="form-text">Пароль<span class="text-danger">*</span></label>
+                                    <input name="password" id="firstName" class="form-control rounded-0" type="password" placeholder="Введите пароль">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="firstName" class="form-text">Повторить пароль</label><span class="text-danger">*</span></label>
+                                    <input name="confirm" id="firstName" class="form-control rounded-0" type="password" placeholder="Повторить пароль">
+                                </div>
+
+                            </div>
+
+                            <div class="col">
+
+                                <div class="py-2">
+                                    <label for="iin" class="form-text">БИН номер<span class="text-danger">*</span></label>
+                                    <input name="iin" id="iin" class="form-control rounded-0" type="text" placeholder="Введите БИН номер">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="company_name" class="form-text">Название компании<span class="text-danger">*</span></label>
+                                    <input name="company_name" id="company_name" class="form-control rounded-0" type="text" placeholder="Введите название компании">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="company_name_full" class="form-text">Название компании полное<span class="text-danger">*</span></label>
+                                    <input name="company_name_full" id="company_name_full" class="form-control rounded-0" type="text" placeholder="Введите полное название компании">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="official_address" class="form-text">Официальный адрес<span class="text-danger">*</span></label>
+                                    <input name="official_address" id="official_address" class="form-control rounded-0" type="text" placeholder="Введите официальный адрес">
+                                </div>
+
+                                <div class="py-2">
+                                    <label for="address" class="form-text">Адрес доставки<span class="text-danger">*</span></label>
+                                    <input name="address" id="address" class="form-control rounded-0" type="text" placeholder="Enter delivery adress">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="text-center my-3">
+                            <input type="submit" class="btn fe-btn" value="Зарегистрироваться">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

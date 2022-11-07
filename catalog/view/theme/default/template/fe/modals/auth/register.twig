@@ -1,0 +1,81 @@
+<div class="modal fade" id="modalRegister" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="text-end p-1">
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn rounded-0 fw-bolder" data-bs-toggle="modal" data-bs-target="#modalLogin" style="color: #0575C0;">
+                            Вход
+                        </button>
+
+                        <span class="btn rounded-0 fw-bolder" style="background: #0575C0; color: white; cursor: default;">
+                            Регистрация
+                        </span>
+                    </div>
+
+                    <div>
+                        <div>
+                            <div class="py-3 px-5">
+                                <label class="form-text">Выберите тип регистарации<span class="text-danger">*</span></label>
+                                <select class="form-select rounded-0 reg-type-sel">
+                                    <option value="retail" selected>Розничный</option>
+                                    <option value="wholesale">Оптовый</option>
+                                </select>
+                                <script type="text/javascript">
+                                    $(document).ready(() => {
+                                        let regTypeSelClass = '.reg-type-sel';
+                                        $(regTypeSelClass).change((val) => {
+                                            let value = $(val.target).val();
+                                            $(regTypeSelClass).val(value);
+                                        });
+                                    });
+                                </script>
+                            </div>
+
+                            <div class="py-3 px-5">
+                                <label for="password" class="form-text">Статус<span class="text-danger">*</span></label>
+                                <select id="registerContinueType" class="form-select rounded-0">
+                                    <option value="legal" selected>Юридическое лицо</option>
+                                    <option value="physical">Физическое лицо</option>
+                                </select>
+                            </div>
+
+                            <div class="py-3 px-5">
+                                <button type="submit" id="registerContinueBtn" class="btn fe-btn w-100 text-uppercase">
+                                    продолжить
+                                </button>
+                            </div>
+                        </div>
+
+                        <script>
+
+                            $( document ).ready(function () {
+                                let modal_self = $('#modalRegister');
+                                let reg_con_type = $('#registerContinueType');
+                                let modal_next_legal = $('#modalRegisterLegal');
+                                let modal_next_physical = $('#modalRegisterPhysical');
+
+                                $('#registerContinueBtn').on('click', function () {
+                                    modal_self.modal('hide');
+
+                                    if (reg_con_type.val() === 'legal') {
+                                        $('#registerLegalContinueType').val('legal');
+                                        modal_next_legal.modal('show');
+                                    } else if (reg_con_type.val() === 'physical') {
+                                        modal_next_physical.modal('show');
+                                    }
+                                });
+                            });
+
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

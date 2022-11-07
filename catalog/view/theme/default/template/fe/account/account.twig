@@ -1,0 +1,29 @@
+{{ header }}
+<main style="min-height: 75vh;">
+
+    <div class="container w-50 mx-auto">
+
+        <h4 class="text-center p-3">{{ customer.firstname }} {{ customer.lastname }}</h4>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="btn btn-link w-100" href="{{ link_account_details }}">Детали</a>
+            </li>
+            <li class="list-group-item">
+                <a class="btn btn-link w-100" href="{{ link_account_requisites }}">Реквизиты</a>
+            </li>
+            <li class="list-group-item">
+                <a class="btn btn-link w-100" href="{{ link_account_address }}">Адрес</a>
+            </li>
+            <li class="list-group-item">
+                <a class="btn btn-link w-100" href="{{ link_account_password }}">Изменить Пароль</a>
+            </li>
+        </ul>
+
+    </div>
+
+</main>
+
+
+
+{{ footer }}

@@ -1,0 +1,132 @@
+{{ deps }}
+
+<div class="container-fluid row">
+
+    <div class="laximo-container col-6" id="laximoGroupContainer">
+
+    </div>
+
+    <div class="laximo-container col-6" id="laximoDetailContainer">
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            let urlQuickGroup = atob('{{ link_quick_group }}');
+            let laximoGroupContainer = $('#laximoGroupContainer');
+            let laximoDetailContainer = $('#laximoDetailContainer');
+            let count = 0;
+
+            let showDetail = function(link) {
+                $.ajax(link)
+                    .done(res => {
+                        laximoDetailContainer.empty();
+                        console.log(res);
+                        res.Category.forEach((category, i) => {
+                            let unitContainer = $('<div></div>');
+                            console.log(category);
+                            category.Unit.forEach((unit, j) => {
+                                let detailContainer = $('<div></div>');
+                                let templateUnit = $(`
+                                    <div class="card w-100">
+                                        <div class="card-header">
+                                            ${unit['@attributes'].name}
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                `);
+
+                                unit.Detail.forEach((detail, k) => {
+                                    let templateDetail = $(`
+                                        <div class="card w-100">
+                                            <a href="${detail._links.PageListDetails}">
+                                                ${detail['@attributes'].name} ${detail['@attributes'].oem}
+                                            </a>
+                                        </div>
+                                    `);
+                                    detailContainer.append(templateDetail);
+                                });
+
+                                templateUnit.find('.card-body').append(detailContainer);
+                                unitContainer.append(templateUnit);
+                            });
+                            let templateCategory = $(`
+                                <div class="card w-100">
+                                    <div class="card-header">
+                                        ${category["@attributes"].name}
+                                    </div>
+                                    <div class="card-body"></div>
+                                </div>
+                            `);
+                            templateCategory.find('.card-body').append(unitContainer);
+                            laximoDetailContainer.append(templateCategory);
+                        });
+                    });
+            };
+
+            let addGroups = function(row, containerId) {
+
+                $(`#${containerId}`).empty();
+
+                row.row.forEach((item, i) => {
+
+                    let itemContainerId = `laximoGroupContainer${item['@attributes'].quickgroupid}`;
+
+                    let templateExpandButton = '';
+                    if (item['row']) {
+                        templateExpandButton = `
+                            <button
+                                class="btn btn-link"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#${itemContainerId}"
+                                aria-expanded="false"
+                                aria-controls="${itemContainerId}"
+                            >
+                                <i class="fa fa-angle-down" style="font-size: 1.2rem"></i>
+                            </button>
+                        `;
+                    }
+
+                    let templateLink = '';
+                    let hasLink = item._links && item._links.ListQuickDetail;
+                    if (hasLink) {
+                        templateLink = `<button class="btn btn-link">${item['@attributes'].name}</button>`;
+                    } else {
+                        templateLink = `<span>${item['@attributes'].name}</span>`;
+                    }
+
+                    let template = $(`
+                        <div>
+                            <span>
+                                ${templateLink}
+                                ${templateExpandButton}
+                            </span>
+                            <div class="mx-3 collapse" id="${itemContainerId}"></div>
+                        </div>
+                    `);
+
+                    if (hasLink) {
+                        template.find('span > button').on('click', () => { showDetail(item._links.ListQuickDetail); });
+                    }
+
+                    if (item.row) {
+                        template.find('span').on('click', () => {
+                            addGroups(item, `${itemContainerId}`);
+                        });
+                    }
+
+                    $(`#${containerId}`).append(template);
+                });
+            };
+
+            $.ajax(urlQuickGroup)
+                .done(res => {
+                    laximoGroupContainer.empty();
+                    addGroups(res.row, 'laximoGroupContainer');
+                });
+        });
+    </script>
+
+</div>

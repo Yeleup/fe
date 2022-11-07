@@ -1,0 +1,38 @@
+{{ header }}
+<main style="min-height: 75vh;">
+
+    <div class="container w-50 mx-auto">
+
+        <style media="screen">
+            form.fe-account-form {
+                background-color: #f8f8f8;
+            }
+        </style>
+
+        <form class="p-3 fe-account-form" action="{{ action_edit }}" method="post">
+            <div class="mb-3">
+                <label class="form-text" for="firstname">Имя</label>
+                <input type="text" name="firstname" class="form-control" placeholder="Имя" value="{{ customer.firstname }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-text" for="lastname">Фамилия</label>
+                <input type="text" name="lastname" class="form-control" placeholder="Фамилия" value="{{ customer.lastname }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-text" for="email">E-mail</label>
+                <input type="text" name="email" class="form-control" placeholder="E-mail" value="{{ customer.email }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-text" for="telephone">Телефон</label>
+                <input type="text" name="telephone" class="form-control" placeholder="Телефон" value="{{ customer.telephone }}">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Отправить</button>
+        </form>
+
+    </div>
+
+</main>
+
+
+
+{{ footer }}

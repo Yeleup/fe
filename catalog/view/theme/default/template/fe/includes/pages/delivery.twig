@@ -1,0 +1,110 @@
+<div class="container">
+    {% if not addresses %}
+    <div class="row row-cols-1 row-cols-md-2 w-75">
+
+        <div class="col my-2">
+            <label for="region" class="form-text">Область <span class="text-danger">*</span></label>
+            <input id="region" name="region" class="form-control rounded-0" type="text" placeholder="Введите область">
+        </div>
+
+        <div class="col my-2">
+            <label for="town" class="form-text">Город <span class="text-danger">*</span></label>
+            <input id="town" name="town" class="form-control rounded-0" type="text" placeholder="Введите город">
+        </div>
+
+        <div class="col my-2">
+            <label for="street" class="form-text">Улица <span class="text-danger">*</span></label>
+            <input id="street" name="street" class="form-control rounded-0" type="text" placeholder="Введите улицу">
+        </div>
+
+        <div class="col my-2">
+            <label for="house" class="form-text">Дом <span class="text-danger">*</span></label>
+            <input id="house" name="house" class="form-control rounded-0" type="text" placeholder="Введите номер дома">
+        </div>
+
+        <div class="col my-2">
+            <label for="entrance" class="form-text">Подъезд <span class="text-danger">*</span> </label>
+            <input id="entrance" name="entrance" class="form-control rounded-0" type="text" placeholder="Введите номер подъезда">
+        </div>
+
+        <div class="col my-2">
+            <label for="apartment" class="form-text">Квартира <span class="text-danger">*</span> </label>
+            <input id="apartment" name="apartment" class="form-control rounded-0" type="text" placeholder="Введите номер квартиры">
+        </div>
+
+    </div>
+    {% else %}
+    <div class="container py-3">
+        <h4>Заполненные Адреса Доставки</h4>
+        <div class="">
+            {% for address in addresses %}
+                <div class="form-check">
+                    <input class="form-check-input" id="checkoutAddress{{ address.id }}" type="radio" name="address_id" value="{{ address.id }}">
+                    <label class="form-check-label" for="checkoutAddress{{ address.id }}">
+                        {% set addr_arr = [] %}
+                        {% if address.region %}{% set addr_arr = addr_arr | merge(['Область: %s' | format(address.region)]) %}{% endif %}
+                        {% if address.town %}{% set addr_arr = addr_arr | merge(['Город: %s' | format(address.town)]) %}{% endif %}
+                        {% if address.street %}{% set addr_arr = addr_arr | merge(['Улица: %s' | format(address.street)]) %}{% endif %}
+                        {% if address.house %}{% set addr_arr = addr_arr | merge(['Дом: %s' | format(address.house)]) %}{% endif %}
+                        {% if address.entrance %}{% set addr_arr = addr_arr | merge(['Подъезд: %s' | format(address.entrance)]) %}{% endif %}
+                        {% if address.apartment %}{% set addr_arr = addr_arr | merge(['Квартира: %s' | format(address.apartment)]) %}{% endif %}
+                        {{ addr_arr | join(', ') }}
+                    </label>
+                </div>
+            {% endfor %}
+            <!-- <input class="form-check-input" type="radio" id="checkoutAddressNone" name="address_id" value="0" checked>
+            <label class="form-check-label" for="checkoutAddressNone">
+                Не выбрано
+            </label> -->
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <h4>Способ доставки</h4>
+
+        <div class="form-check">
+            <input class="form-check-input" id="deliveryOptionFalse" type="radio" name="delivery_option" value="false">
+            <label class="form-check-label" for="deliveryOptionFalse">
+                Самовывоз
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" id="deliveryOptionTrue" type="radio" name="delivery_option" value="true" checked>
+            <label class="form-check-label" for="deliveryOptionTrue">
+                Доставка по городу Алматы - {{ delivery_price }} тг
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" id="deliveryOptionTrue" type="radio" name="delivery_option" value="false">
+            <label class="form-check-label" for="deliveryOptionTrue">
+                Доставка в регионы (по РК)
+            </label>
+        </div>
+    </div>
+
+    <div class="row justify-content-end p-4">
+        <div class="col-3">
+            <button class="btn fe-btn-bordered w-100" id="checkoutBtnDeliveryBack" type="button" name="button">Назад</button>
+            <script type="text/javascript">
+                $(document).ready(() => {
+                    $('#checkoutBtnDeliveryBack').click(() => {
+                        new bootstrap.Tab($('#pills-requisites-tab')).show();
+                    });
+                });
+            </script>
+        </div>
+        <div class="col-3">
+            <button class="btn fe-btn-bordered w-100" id="checkoutBtnDeliveryNext" type="button" name="button">Далее</button>
+            <script type="text/javascript">
+                $(document).ready(() => {
+                    $('#checkoutBtnDeliveryNext').click(() => {
+                        new bootstrap.Tab($('#pills-payment-tab')).show();
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>

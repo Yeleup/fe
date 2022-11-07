@@ -1,0 +1,112 @@
+{{ header }}
+
+<main class="">
+
+    <div class="container-fluid my-3">
+
+        <div class="row my-5">
+            <div class="col">
+                <div class="container">
+
+                    {{ button_links }}
+
+                    <form action="" method="GET">
+                        <div class="row row-cols-sm-1 row-cols-md-3">
+
+                            <div class="col">
+
+                                <div class="my-4">
+                                    <label for="lastName" class="form-text">Фамилия<span class="text-danger">*</span></label>
+                                    <input id="lastName" class="form-control rounded-0" type="text" placeholder="Введите фамилию" value="{{ customer['lastname'] }}">
+                                </div>
+                                <div class="my-4">
+                                    <label for="firstName" class="form-text">Имя<span class="text-danger">*</span></label>
+                                    <input id="firstName" class="form-control rounded-0" type="text" placeholder="Введите имя" value="{{ customer['firstname'] }}">
+                                </div>
+                                <div class="my-4">
+                                    <label for="paternalName" class="form-text">Отчество <span class="text-danger">*</span> </label>
+                                    <input id="paternalName" class="form-control rounded-0" type="text" placeholder="Введите отчество">
+                                </div>
+
+                            </div>
+
+                            <div class="col">
+
+                                <div class="my-4">
+                                    <label for="email" class="form-text">Email <span class="text-danger">*</span> </label>
+                                    <input id="email" class="form-control rounded-0" type="email" placeholder="Введите email" value="{{ customer['email'] }}">
+                                </div>
+                                <div class="my-4">
+                                    <label for="phone" class="form-text">Контактный телефон <span class="text-danger">*</span> </label>
+                                    <input id="phone" class="form-control rounded-0" type="text" placeholder="Введите номер телефон" value="{{ customer['telephone'] }}">
+                                </div>
+                                <div class="my-4">
+                                    <label for="company" class="form-text">Название компании <span class="text-danger">*</span> </label>
+                                    <input id="company" class="form-control rounded-0" type="text" placeholder="Введите название компании">
+                                </div>
+
+                            </div>
+
+                            <div class="col">
+
+                                <div class="my-4">
+                                    <label for="registrationType" class="form-text">Тип регистрации</label>
+                                    <select id="registrationType" class="form-select rounded-0" style="background-image: none;">
+                                        <option value="1" selected>Тип регистрации</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <b>Смена пароля</b>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="my-4">
+                                    <label for="password" class="form-text">Пароль <span class="text-danger">*</span> </label>
+                                    <input id="password" class="form-control rounded-0" type="password" placeholder="Введите пароль">
+                                </div>
+
+                                <div class="my-4">
+                                    <label for="password_confirm" class="form-text">Подтверждение пароля <span class="text-danger">*</span> </label>
+                                    <input id="password_confirm" class="form-control rounded-0" type="password" placeholder="Введите пароль повторно">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-end my-3">
+                            <div class="col-sm-12 col-md-8 text-center">
+                                <button class="btn fe-btn-bordered mx-2">Отправить</button>
+                                <button class="btn fe-btn-bordered mx-2">Отмена</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+
+            <div class="col-3 text-end">
+                <div class="fw-bolder p-3 w-75 text-start d-inline-block"
+                    style="background: linear-gradient(90deg, #FFE767 0%, rgba(255, 231, 103, 0) 100%); border-radius: 10px">
+                    <div>
+                        Баланс
+                    </div>
+                    <div>
+                        20 000 тг
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+{{ footer }}

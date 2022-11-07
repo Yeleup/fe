@@ -1,0 +1,111 @@
+{{ header }}
+
+<style>
+    h1 {color:#333;position:relative;}
+</style>
+
+<main class="">
+    <div class="container-fluid position-relative" style="background: center url('image/catalog/fe/static/about/tom-robertson-4k5v916PHW8-unsplash 1.png'); background-size:cover;">
+        <div style="left:0; width: 100%; height: 100%; position: absolute; background: linear-gradient(180deg, #FFFFFF 0%, rgba(58, 101, 159, 0.2) 100%)"></div>
+        <div class="container" style="padding: 50px 0;">
+            <div>
+                <br><br><br>
+                <h1>О нас</h1>
+            </div>
+            <div class="row gx-5">
+                {% for card in card_top %}
+                <div class="col-xs-12 col-lg-3 my-3 about-card-container" style="z-index: 10;">
+                    <div class="row about-card-head rounded text-center p-1">
+                        <span class="m-auto">{{ card[0] }}</span>
+                    </div>
+                    <div class="row rounded text-center p-2 about-card-body">
+                        <div class="my-auto">
+                            {{ card[1] }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="d-sm-none d-lg-block" style="height: 40px">
+            </div>
+            <div class="row gx-5">
+                {% for card in card_bottom %}
+                <div class="col-lg-3 col-xs-12 my-3 about-card-container" style="z-index: 10;">
+                    <div class="row about-card-head rounded text-center p-1">
+                        <span class="m-auto">{{ card[0] }}</span>
+                    </div>
+                    <div class="row rounded text-center p-2 about-card-body">
+                        <div class="my-auto">
+                            {{ card[1] }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <div class="container about-description">
+        <div class="row py-3">
+            <div class="col-6"></div>
+            <div class="col-6" style="height: 7px; background-color: #FFE767"></div>
+        </div>
+        <div class="row" style="font-size: .8em;">
+            <div class="col-md-8 col-sm-12">
+                <div class="py-2">
+                    Наша компания имеет свой собственный большой магазин оптовой и розничной торговли, находящийся в центре города Алматы.
+                </div>
+                <div class="py-2">
+                    Магазин имеет удобное месторасположение с парковкой для клиентов. Имеются большие склады и запасы постоянно пополняются.
+                </div>
+                <div class="py-2">
+                    Мы разработали собственную систему логистики, позволяющую осуществлять прямые поставки из Южной Кореи и Тайваня на регулярной основе.
+                </div>
+                <div class="py-2">
+                    Мы сотрудничаем со многими автосервисами города Алматы, а так же в регионах Казахстана, помогаем грамотно подобрать запчасти и своевременно их доставить, при этом даём гарантию на заводской брак.
+                </div>
+                <div class="py-2">
+                    Так же мы работаем с большим количеством частных лиц, будь то магазины и бутики, снабжая их запасными частями высокого качества.
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12"
+                style="background: center url('image/catalog/fe/static/about/Rectangle 28.png') no-repeat; background-size:contain; min-height: 300px;"></div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-3" style="background: #F6FAFF;">
+        <div class="container">
+            <div class="text-center" style="padding-top: 50px; padding-bottom: 30px">
+                <h4 class="">Сертификаты, грамоты, благодарности и дипломы</h4>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <img height="80%" src="image/catalog/fe/static/about/Scan1-1 1.png" alt="">
+                        </div>
+                        <div class="col">
+                            <img height="80%" src="image/catalog/fe/static/about/Scan2-1 1.png" alt="">
+                        </div>
+                        <div class="col">
+                            <img height="80%" src="image/catalog/fe/static/about/Scan3-1 1.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 p-3" style="font-size: .8em;">
+                    <p>
+                        На протяжении всего времени существования Компания «Пятый элемент» постоянно расширяет и пополняет ассортимент запасных частей для японских и корейских автомобилей, а также сотрудничает с заводами-партнерами в сфере разработки нового ассортимента запасных частей.
+                    </p>
+                    <p>
+                        Мы приглашаем к сотрудничеству оптовых покупателейи в свою очередь гарантируем грамотный подход к Вам,с максимальной заботой о Вас и Вашем бизнесе.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{ footer }}

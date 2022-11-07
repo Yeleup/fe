@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="input-group">
+        <input id="homeSearchInput" type="text" class="form-control" style="border-right: none;" placeholder="ПОИСК ПО НОМЕРУ ЗАПЧАСТИ, ПРИМЕР: 0756985">
+        <button id="homeSearchBtn" class="input-group-text" style="background-color: white;">
+            <i class="fas fa-search" style="color: #3A659F;"></i>
+        </button>
+        <script>
+            $( document ).ready(function() {
+                $('#homeSearchBtn').on('click', function() {
+                    $('#homeSearchBtn').html(`
+                        <i class="fa fa-spinner fa-spin"></i>
+                    `);
+
+                    if ($('#homeSearchInput').val() !== '') {
+                        $.ajax('index.php?route=fe/api/common/home_search&search=' + $('#homeSearchInput').val())
+                            .done((res) => {
+                                let redirect = res.data.redirect;
+                                $( location ).attr('href', redirect);
+                            })
+                            .fail(() => {
+                                console.log('fail.');
+                            });
+                    }
+
+                });
+
+                $('#homeSearchInput').keydown(function(event) {
+                    if (event.keyCode === 13) {
+                        $('#homeSearchBtn').trigger('click');
+                    }
+                });
+            });
+        </script>
+    </div>
+	{% if customer_id != null %}
+        <div class="input-group" style='margin-top:20px;'>
+            <input class="btn btn-primary my-auto w-100 rounded-0 dropdown-toggle text-uppercase" type="submit" value="Поиск по каталогам" onclick="window.location='/katalog&search=!';" />  
+        </div>
+    {% endif %}
+</div>
