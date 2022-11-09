@@ -142,12 +142,10 @@ class ModelFeCatalogProduct extends Model {
         
 		$sql = "SELECT " . $sql_select . " FROM " . DB_PREFIX . "product p";
         $sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON p.product_id = pd.product_id";
-        $sql .= " LEFT JOIN " . DB_PREFIX . "product_to_crosscode ptc ON ptc.product_id = p.product_id";
-        $sql .= " LEFT JOIN " . DB_PREFIX . "product_crosscode pc ON ptc.crosscode_id = pc.product_crosscode_id";
         $sql .= " WHERE p.guid IS NOT NULL AND p.status = 1";
 
         if ($words) {
-            $sql .= " AND ( " . implode(" AND ", array_map(function($e) {return "pd.name LIKE '%" . $e . "%' OR pc.crosscode LIKE '%" . $e . "%'";}, $words)) . " )";
+            $sql .= " AND ( " . implode(" AND ", array_map(function($e) {return "pd.name LIKE '%" . $e . "%'";}, $words)) . " )";
         }
 
         // Set Limits
@@ -218,20 +216,22 @@ class ModelFeCatalogProduct extends Model {
         $products = $this->getByCrosscode($oem);
         $crosscodes = [];
 
+        $result_product_ids = [];
         foreach ($products as $product) {
             $result_crosscodes = $this->model_fe_market_crosscode->getCrosscodesByProductId($product['product_id']);
             foreach ($result_crosscodes as $crosscode) {
                 $crosscodes[$crosscode['crosscode']] = 1;
             }
+            $result_product_ids[$product['product_id']] = 1;
         }
 
-        $result_product_ids = [];
-        foreach ($crosscodes as $crosscode => $_) {
-            $products = $this->getByCrosscode($crosscode);
-            foreach ($products as $product) {
-                $result_product_ids[$product['product_id']] = 1;
-            }
-        }
+//        $result_product_ids = [];
+//        foreach ($crosscodes as $crosscode => $_) {
+//            $products = $this->getByCrosscode($crosscode);
+//            foreach ($products as $product) {
+//                $result_product_ids[$product['product_id']] = 1;
+//            }
+//        }
 
         $products = [];
         foreach ($result_product_ids as $product_id => $_) {
