@@ -5,78 +5,78 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>https://test.fe.kz/</loc>
+        <loc>https://fe.kz/</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/index.php?route=fe/common/home</loc>
+        <loc>https://fe.kz/index.php?route=fe/common/home</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/index.php?route=fe/common/about</loc>
+        <loc>https://fe.kz/index.php?route=fe/common/about</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/index.php?route=fe/common/cooperation</loc>
+        <loc>https://fe.kz/index.php?route=fe/common/cooperation</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/index.php?route=fe/common/contacts</loc>
+        <loc>https://fe.kz/index.php?route=fe/common/contacts</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/index.php?route=fe/pages/cart</loc>
+        <loc>https://fe.kz/index.php?route=fe/pages/cart</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/masla</loc>
+        <loc>https://fe.kz/masla</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki</loc>
+        <loc>https://fe.kz/vetroviki</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/dvorniki</loc>
+        <loc>https://fe.kz/dvorniki</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/lampochki</loc>
+        <loc>https://fe.kz/lampochki</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/muhoboyki</loc>
+        <loc>https://fe.kz/muhoboyki</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/katalog</loc>
+        <loc>https://fe.kz/katalog</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/masla?page=2</loc>
+        <loc>https://fe.kz/masla?page=2</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/masla?page=3</loc>
+        <loc>https://fe.kz/masla?page=3</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/masla?page=4</loc>
+        <loc>https://fe.kz/masla?page=4</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/masla?page=5</loc>
+        <loc>https://fe.kz/masla?page=5</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/masla?page=6</loc>
+        <loc>https://fe.kz/masla?page=6</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki?page=2</loc>
+        <loc>https://fe.kz/vetroviki?page=2</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki?page=3</loc>
+        <loc>https://fe.kz/vetroviki?page=3</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki?page=4</loc>
+        <loc>https://fe.kz/vetroviki?page=4</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki?page=5</loc>
+        <loc>https://fe.kz/vetroviki?page=5</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki?page=6</loc>
+        <loc>https://fe.kz/vetroviki?page=6</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/vetroviki?page=7</loc>
+        <loc>https://fe.kz/vetroviki?page=7</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/lampochki?page=2</loc>
+        <loc>https://fe.kz/lampochki?page=2</loc>
     </url>
     <url>
-        <loc>https://test.fe.kz/lampochki?page=3</loc>
+        <loc>https://fe.kz/lampochki?page=3</loc>
     </url>
 </urlset>

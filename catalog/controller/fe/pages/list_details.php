@@ -129,7 +129,7 @@ class ControllerFePagesListDetails extends Controller {
         $data['client_category_id'] = $client_category_id;
 		//************************************************************************************************** */
 
-		$data['product_search'] = $this->load->view('fe/includes/common/search_bar', $data);
+		$data['product_search'] = $this->load->view('fe/includes/common/search_bar');
 		$data['link_product_detail'] = $this->url->link('fe/pages/details', '', true);
 
 		$data['footer'] = $this->load->controller('fe/common/footer');

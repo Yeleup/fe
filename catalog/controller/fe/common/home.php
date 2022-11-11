@@ -35,13 +35,13 @@ class ControllerFeCommonHome extends Controller {
 		$data['prod_subcat'] = $this->model_fe_market_subcategory->getAll();
         foreach ($data['prod_subcat'] as $key => $subcat) {
             $data['prod_subcat'][$key]['link'] = $this->url->link('katalog?subcat=' . $subcat['id'], '', true);
-        }
+        }			
 		$data['customer_id'] = $this->session->data['customer_id'] ?? 0;
 		$data['logged'] = $this->customer->isLogged();
 
 		$data['search_bar'] = $this->load->view('fe/includes/common/search_bar', $data);
 		$data['search'] = $this->load->controller('fe/includes/common/search');
-		$data['search_laximo'] = $this->load->controller('fe/includes/common/search_laximo');
+		//$data['search_laximo'] = $this->load->controller('fe/includes/common/search_laximo');
 		$data['footer'] = $this->load->controller('fe/common/footer');
 		$data['header'] = $this->load->controller('fe/common/header');
 
