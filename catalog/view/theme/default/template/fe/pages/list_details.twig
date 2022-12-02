@@ -63,13 +63,9 @@
 
             <div class="col">
 
-                {% if logged == null %}
-                    <div class="p-3">
-                        {{ product_search }}
-                    </div>
-                {% endif %} 
-
                 <h1>{{ category_name }}</h1>
+
+                    {{ product_search }}
 
                     {% if catalogs %}
                         {% if logged != null %}
@@ -90,7 +86,7 @@
                             {% for product in products %}
                             {# {% if product['quantity'] > 0 %} #}
                             <div class="col px-3 py-3 fe-search-target-container" id="product-{{ product['product_id'] }}">
-                                <div class="row h-100 px-1 py-3 row-cols-1 row-cols-lg-2" style="background-color: white; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                                <div class="row h-100 px-1 py-3 row-cols-1 row-cols-lg-4" style="background-color: white; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
                                     <div class="col">
                                         <div style="font-size: .8em;">
                                                 <span>
@@ -143,38 +139,6 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
-                                            <div class="col my-auto">
-                                                <div class="row align-items-end h-100 gx-0">
-                                                    <div class="col text-center" style="font-size: 1.2em;">
-                                                        <div class="input-group">
-                                                            <button type="button" id="buy-counter-btn-minus-{{ product['product_id'] }}" class="btn btn-secondary" name="button">-</button>
-                                                            <input class="form-control" id="buy-counter-{{ product['product_id'] }}" type="text" value="1">
-                                                            <button type="button" id="buy-counter-btn-plus-{{ product['product_id'] }}" class="btn btn-secondary" name="button">+</button>
-                                                        </div>
-
-                                                        <script>
-                                                            $(document).ready(() => {
-                                                                let productId = '{{ product['product_id'] }}'
-                                                                let counter = $(`#buy-counter-${productId}`);
-                                                                $(`#buy-counter-btn-minus-${productId}`).on('click', function () {
-                                                                    let count = counter.val();
-                                                                    if (count > 1) {
-                                                                        counter.val(parseInt(count) - 1);
-                                                                    }
-                                                                });
-                                                                $(`#buy-counter-btn-plus-${productId}`).on('click', function () {
-                                                                    let count = counter.val();
-                                                                    counter.val(parseInt(count) + 1);
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
-
-                                                    <div class="col text-center">
-                                                        {{ product['price']|round(0, 'floor') }} тг
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="row h-50 gx-0">
                                             <div class="col my-auto">
@@ -182,18 +146,58 @@
                                                     Номер детали:
                                                 </div>
                                                 <div>
-                                                {% if product['crosscode'] %}
-                                                    {{ product['crosscode'] }}
+                                                {% if product['model'] %}
+                                                    {{ product['model'] }}
                                                 {% else %}
                                                     -
                                                 {% endif %}
                                                 </div>
                                             </div>
-                                            <div class="col my-auto">
-                                                <button id="add-to-cart-btn-{{ product['product_id'] }}" class="btn fe-btn-bordered w-100">
-                                                    <span>Добавить в корзину</span>
-                                                </button>
+                                        </div>
+                                    </div>
+                                    <div class="col text-center">
+                                        {% if product.image %}
+                                            <img src="/image/{{ product.image }}" height="200" />
+                                        {% else %}
+                                            <img src="/image/no_image.png" height="200">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col my-auto">
+                                        <div class="row align-items-end h-50 gx-0">
+                                            <div class="col text-center" style="font-size: 1.2em;">
+                                                <div class="input-group">
+                                                    <button type="button" id="buy-counter-btn-minus-{{ product['product_id'] }}" class="btn btn-secondary" name="button">-</button>
+                                                    <input class="form-control" id="buy-counter-{{ product['product_id'] }}" type="text" value="1">
+                                                    <button type="button" id="buy-counter-btn-plus-{{ product['product_id'] }}" class="btn btn-secondary" name="button">+</button>
+                                                </div>
+
                                                 <script>
+                                                    $(document).ready(() => {
+                                                        let productId = '{{ product['product_id'] }}'
+                                                        let counter = $(`#buy-counter-${productId}`);
+                                                        $(`#buy-counter-btn-minus-${productId}`).on('click', function () {
+                                                            let count = counter.val();
+                                                            if (count > 1) {
+                                                                counter.val(parseInt(count) - 1);
+                                                            }
+                                                        });
+                                                        $(`#buy-counter-btn-plus-${productId}`).on('click', function () {
+                                                            let count = counter.val();
+                                                            counter.val(parseInt(count) + 1);
+                                                        });
+                                                    });
+                                                </script>
+                                            </div>
+
+                                            <div class="col text-center">
+                                                {{ product['price']|round(0, 'floor') }} тг
+                                            </div>
+                                        </div>
+                                        <div class="mt-1">
+                                            <button id="add-to-cart-btn-{{ product['product_id'] }}" class="btn fe-btn-bordered w-100">
+                                                <span>Добавить в корзину</span>
+                                            </button>
+                                            <script>
                                                 $(document).ready(() => {
                                                     let productId = '{{ product['product_id'] }}';
                                                     let btnId = `#add-to-cart-btn-${productId}`;
@@ -215,8 +219,7 @@
                                                         // cart.add(productId, quantity);
                                                     });
                                                 });
-                                                </script>
-                                            </div>
+                                            </script>
                                         </div>
                                     </div>
                                 </div>

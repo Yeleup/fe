@@ -1,6 +1,10 @@
 <?php
 class ControllerFeApiMarketProduct extends Controller {
     public function index($args) {
+        if (isset($this->request->get['product_id'])) {
+            $args['product_id'] = $this->request->get['product_id'];
+        }
+
         $this->load->model('fe/catalog/product');
         $this->load->model('fe/catalog/category');
         $this->load->model('fe/localization/language');
@@ -17,7 +21,22 @@ class ControllerFeApiMarketProduct extends Controller {
             $result = $client->get('/market/product/get/list');
         }
 
+        $this->load->model('fe/market/crosscode');
+
         foreach ($result->message as $product) {
+            $productByGuid = $this->model_fe_catalog_product->getProductByGuid($product->guid);
+
+            $model = '';
+            if ($product->id) {
+                $model = $product->id;
+            } else {
+                $crosscodes = $this->model_fe_market_crosscode->getByProductId($productByGuid['product_id']);
+
+                if (isset($crosscodes[0]['crosscode']) && !empty($crosscodes[0]['crosscode'])) {
+                    $model = $crosscodes[0]['crosscode'];
+                }
+            }
+
             $prod_cat_id = $this->model_fe_catalog_category->getCategoryByGuid($product->category)['category_id'] ?? null;
 
             $data = [
@@ -40,7 +59,7 @@ class ControllerFeApiMarketProduct extends Controller {
                     0,
                 ],
 
-                'model' => ' ',
+                'model' => $model,
                 'sku' => '',
                 'upc' => '',
                 'ean' => '',
@@ -81,6 +100,54 @@ class ControllerFeApiMarketProduct extends Controller {
             $this->load->model('fe/market/subcategory');
             if ($product->subcategory ?? false) {
                 $this->model_fe_market_subcategory->addToProduct($product_id, ['name' => $product->subcategory]);
+            }
+
+            $imagePath = DIR_IMAGE . 'catalog/products/'. $product->guid;
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath, 0777, true);
+            }
+
+            // Image
+            $dir = 'http://87.255.197.177:22000/'. $product->guid;
+            $html = @file_get_contents($dir);
+
+            if ($html === FALSE) {
+                $isDir = false;
+            } else {
+                $isDir = true;
+            }
+
+            if ($isDir) {
+                $count = preg_match_all('/<td><a href="([^"]+)">[^<]*<\/a><\/td>/i', $html, $files);
+                for ($i = 1; $i < $count; $i++) {
+                    $image = 'catalog/products/'. $product->guid . '/' . $files[1][$i];
+
+                    if ($i == 1) {
+                        $this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($image) . "' WHERE product_id = '" . (int)$product_id . "'");
+
+                        $ch = curl_init('http://87.255.197.177:22000/'. $product->guid . '/' . $files[1][$i]);
+                        $fp = fopen($imagePath . '/' . $files[1][$i], 'wb');
+                        curl_setopt($ch, CURLOPT_FILE, $fp);
+                        curl_setopt($ch, CURLOPT_HEADER, 0);
+                        curl_exec($ch);
+                        curl_close($ch);
+                        fclose($fp);
+                    } else {
+                        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "' AND image = '" . $image . "'");
+
+                        if (!$query->num_rows) {
+                            $ch = curl_init('http://87.255.197.177:22000/'. $product->guid . '/' . $files[1][$i]);
+                            $fp = fopen($imagePath . '/' . $files[1][$i], 'wb');
+                            curl_setopt($ch, CURLOPT_FILE, $fp);
+                            curl_setopt($ch, CURLOPT_HEADER, 0);
+                            curl_exec($ch);
+                            curl_close($ch);
+                            fclose($fp);
+
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($image) . "', sort_order = '" . $i . "'");
+                        }
+                    }
+                }
             }
         }
 

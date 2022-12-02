@@ -25,14 +25,24 @@
                         </b>
                     </div>
                     <div class="col">
-                        {% if product.quantity > 0 %}
-                            <img src="image/catalog/fe/pages/details/icon_check.svg" alt="">
-                            <span>
+                        <div class="row">
+                            <div class="col text-center">
+                                {% if product.quantity > 0 %}
+                                    <img src="image/catalog/fe/pages/details/icon_check.svg" alt="">
+                                    <span>
                                 В наличии
                             </span>
-                        {% else %}
-                            <span class="text-danger" style="font-weight: 800; font-size: 1.3em">Не имеется на складе.</span>
-                        {% endif %}
+                                {% else %}
+                                    <span class="text-danger" style="font-weight: 800; font-size: 1.3em">Не имеется на складе.</span>
+                                {% endif %}
+                            </div>
+                            <div class="col"></div>
+                            <div class="col">
+                                {% if product.image %}
+                                    <img width="200px" src="image/{{ product.image }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -40,7 +50,7 @@
                     <div class="col">
                         {% set left_infos = [
                             {top: 'Производитель:', bottom: product.brand_name},
-                            {top: 'Номер детали:', bottom: product.crosscode},
+                            {top: 'Номер детали:', bottom: product.model},
                             {top: 'Название служебное:', bottom: product.name},
                         ] %}
                         {% for left_info in left_infos %}
@@ -137,7 +147,7 @@
                 </div>
             </div>            <div class="col-5 text-end">
                 {% if product.images %}
-                <div class="d-inline-block" style="height: 224px; width: 316px;">
+                <div class="d-inline-block">
                     <img class="img-fluid img-thumbnail" src="image/{{ product.images[0].image }}" alt="">
                 </div>
                 {% endif %}

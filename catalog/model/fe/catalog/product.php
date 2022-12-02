@@ -206,7 +206,7 @@ class ModelFeCatalogProduct extends Model {
 		$sql = "SELECT * FROM " . DB_PREFIX . "product p
         LEFT JOIN " . DB_PREFIX . "product_to_crosscode ptc ON p.product_id = ptc.product_id
         LEFT JOIN " . DB_PREFIX . "product_crosscode pc ON ptc.crosscode_id = pc.product_crosscode_id
-        WHERE pc.crosscode Like '%" . $this->db->escape($crosscode) . "%' AND p.status = 1";
+        WHERE (p.model = '". $this->db->escape($crosscode) ."' OR pc.crosscode Like '%" . $this->db->escape($crosscode) . "%') AND p.status = 1";
         $result = $this->db->query($sql);
         return $result->rows;
     }
