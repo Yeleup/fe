@@ -130,6 +130,10 @@ class ControllerExtensionPaymentJetpay extends Controller
 
     public function fail_callback()
     {
+        $logger = new Log('jetpay_fail.log');
+        $body = file_get_contents('php://input');
+        $logger->write(sprintf('%s: %s', 'fail callback', $body));
+
         $orderId = $this->getOrderId();
         $isTestMode = $this->isInTestMode();
         $isTestRequest = $this->isTestRequest();
@@ -162,6 +166,8 @@ class ControllerExtensionPaymentJetpay extends Controller
 
     public function callback()
     {
+        $logger = new Log('jetpay.log');
+
         $body = file_get_contents('php://input');
         $bodyData = json_decode($body, true);
 
@@ -172,7 +178,7 @@ class ControllerExtensionPaymentJetpay extends Controller
         $signer = $this->getSigner(null);
 
         if (is_array($bodyData) && $signer->checkSignature($bodyData)) {
-            $this->log('signature valid', $bodyData['signature']);
+            $logger->write(sprintf('%s: %s', 'signature valid', print_r($bodyData['signature'], true)));
 
             $orderId = $bodyData['payment']['id'];
             $orderId = JetpayOrderIdFormatter::removeOrderPrefix($orderId, Signer::CMS_PREFIX);
@@ -206,7 +212,8 @@ class ControllerExtensionPaymentJetpay extends Controller
             die('ok');
         }
 
-        $this->log('signature invalid');
+        $logger->write('signature invalid');
+
         http_response_code(400);
         die('signature invalid');
     }
