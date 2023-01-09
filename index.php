@@ -1,23 +1,23 @@
 <?php
-$request_ip = $_SERVER['REMOTE_ADDR'];
-
-if (file_exists('./system/config/fe_blockip.txt.regex')) {
-    $file_blockip_contents = file_get_contents('./system/config/fe_blockip.txt.regex');
-    $blacklist_ip_range = preg_split('/[\s]+/', $file_blockip_contents);
-}
-
-$block = false;
-
-foreach( $blacklist_ip_range as $ip ) {
-    if( $ip && preg_match( $ip, $request_ip ) ) {
-		$block = true;
-	}
-}
-
-if ($block) {
-	header('Location: /block.php');
-	exit;
-}
+//$request_ip = $_SERVER['REMOTE_ADDR'];
+//
+//if (file_exists('./system/config/fe_blockip.txt.regex')) {
+//    $file_blockip_contents = file_get_contents('./system/config/fe_blockip.txt.regex');
+//    $blacklist_ip_range = preg_split('/[\s]+/', $file_blockip_contents);
+//}
+//
+//$block = false;
+//
+//foreach( $blacklist_ip_range as $ip ) {
+//    if( $ip && preg_match( $ip, $request_ip ) ) {
+//		$block = true;
+//	}
+//}
+//
+//if ($block) {
+//	header('Location: /block.php');
+//	exit;
+//}
 
 /* LastModified */
 // $LastModified_unix = strtotime(date("D, d M Y H:i:s", filectime($_SERVER['SCRIPT_FILENAME'])));

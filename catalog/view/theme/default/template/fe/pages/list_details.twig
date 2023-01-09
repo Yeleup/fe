@@ -210,6 +210,9 @@
                                                             data: {
                                                                 product_id: productId,
                                                                 quantity: quantity
+                                                            },
+                                                            success: function () {
+                                                                $('html, body').animate({ scrollTop: 0 }, 'slow');
                                                             }
                                                         })
                                                             .done(res => {

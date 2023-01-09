@@ -39,6 +39,7 @@ class ControllerFeCommonHome extends Controller {
 		$data['customer_id'] = $this->session->data['customer_id'] ?? 0;
 		$data['logged'] = $this->customer->isLogged();
 
+        $data['search_text'] = (isset($this->request->get['search']) ? $this->request->get['search'] : '');
 		$data['search_bar'] = $this->load->view('fe/includes/common/search_bar', $data);
 		$data['search'] = $this->load->controller('fe/includes/common/search');
 		//$data['search_laximo'] = $this->load->controller('fe/includes/common/search_laximo');

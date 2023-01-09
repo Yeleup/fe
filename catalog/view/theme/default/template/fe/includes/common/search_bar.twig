@@ -1,15 +1,13 @@
-<div class="row">
+<div class="row search-bar">
     <div class="input-group">
-        <input id="homeSearchInput" value="{{ search }}" type="text" class="form-control" style="border-right: none;" placeholder="ПОИСК ПО НОМЕРУ ЗАПЧАСТИ, ПРИМЕР: 0756985">
+        <input id="homeSearchInput" value="{{ search_text }}" type="text" class="form-control" style="border-right: none;" placeholder="ПОИСК ПО НОМЕРУ ЗАПЧАСТИ, ПРИМЕР: 0756985">
         <button id="homeSearchBtn" class="input-group-text" style="background-color: white;">
             <i class="fas fa-search" style="color: #3A659F;"></i>
         </button>
         <script>
             $( document ).ready(function() {
                 $('#homeSearchBtn').on('click', function() {
-                    $('#homeSearchBtn').html(`
-                        <i class="fa fa-spinner fa-spin"></i>
-                    `);
+                    $('#homeSearchBtn').html('<i class="fa fa-spinner fa-spin"></i>');
 
                     if ($('#homeSearchInput').val() !== '') {
                         $.ajax('index.php?route=fe/api/common/home_search&search=' + $('#homeSearchInput').val())

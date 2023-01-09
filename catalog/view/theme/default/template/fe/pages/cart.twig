@@ -14,28 +14,52 @@
 
 <main style="min-height: 50vh;">
     <div class="container mt-3">
+        {{ search_bar }}
+        {{ search_laximo }}
+    </div>    
+    
+    <div class="container mt-3">
 
         {{ cart_button_links }}
 
         <div class="row">
             <div class="col">
                 <div class="row fe-table-header mx-auto">
-                    {% set tb_header = [
-                        'Марка, группы',
-                        'Код',
-                        'Название',
-                        'Наличие',
-                        'Цена',
-                        'Количество',
-                        'Сумма',
-                    ] %}
-                    {% for i in tb_header %}
                     <div class="col fw-light d-flex">
                         <div class="d-inline-block text-center m-auto">
-                            {{ i }}
+                            Марка, группы
                         </div>
                     </div>
-                    {% endfor %}
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            Код
+                        </div>
+                    </div>
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            Название
+                        </div>
+                    </div>
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            Наличие
+                        </div>
+                    </div>
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            Цена
+                        </div>
+                    </div>
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            Количество
+                        </div>
+                    </div>
+                    <div class="col fw-light d-flex">
+                        <div class="d-inline-block text-center m-auto">
+                            Сумма
+                        </div>
+                    </div>
                 </div>
 
                 <div id="fe-cart-row-container">
@@ -78,14 +102,14 @@
                         </div>
 
                         <div class="row fe-table-data-row mb-3 gx-0 mx-auto">
-                            <div class="col d-flex py-2">
-                                <div class="d-inline-block text-center m-auto">
+                            <div class="col d-flex py-2 d-none d-sm-block m-auto hidden-xs">
+                                <div class="d-inline-block text-center m-auto hidden-xs">
                                     Корейские авто, Корея
                                 </div>
                             </div>
 
-                            <div class="col d-flex py-2">
-                                <div class="d-inline-block text-center m-auto">
+                            <div class="col d-flex py-2 d-none d-sm-block d-none d-sm-block">
+                                <div class="d-inline-block text-center m-auto d-none d-sm-block">
                                     {{ product['crosscode'] }}
                                 </div>
                             </div>
@@ -93,6 +117,7 @@
                             <div class="col d-flex py-2">
                                 <div class="d-inline-block text-center m-auto">
                                     {{ product['name'] }}
+                                    <small class="d-block d-sm-none">{{ product['crosscode'] }}</small>
                                 </div>
                             </div>
 
@@ -114,15 +139,15 @@
                                 </div>
                             </div>
 
-                            <div class="col d-flex py-2">
-                                <div class="d-inline-block text-center m-auto">
+                            <div class="col d-flex py-2 d-none d-sm-block">
+                                <div class="d-inline-block text-center m-auto d-none d-sm-block">
                                     <span id="fe-cart-price-{{ product['cart_id'] }}">
                                         {{ product['price']|round() }}
                                     </span> тг
                                 </div>
                             </div>
 
-                            <div class="col d-flex py-2">
+                            <div class="col d-flex py-2 px-2">
                                 <div class="d-inline-block text-center m-auto">
                                     <div class="input-group">
                                         <button type="button" id="buy-counter-btn-minus-{{ product['cart_id'] }}" class="btn btn-secondary" name="button">-</button>
@@ -132,8 +157,8 @@
                                 </div>
                             </div>
 
-                            <div class="col d-flex py-2">
-                                <div class="d-inline-block text-center m-auto">
+                            <div class="col d-flex py-2 d-none d-sm-block">
+                                <div class="d-inline-block text-center m-auto d-none d-sm-block">
                                     <span id="fe-cart-price-total-{{ product['cart_id'] }}" class="fe-cart-price-total">0</span> тг
                                 </div>
                                 <script>
@@ -240,7 +265,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-sm-3">
                 <div class="row fe-table-header mx-auto">
                     <div class="col fw-light d-flex py-2">
                         <div class="d-inline-block text-center m-auto fw-bold">

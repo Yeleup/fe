@@ -148,6 +148,9 @@ class ModelFeCatalogProduct extends Model {
             $sql .= " AND ( " . implode(" AND ", array_map(function($e) {return "pd.name LIKE '%" . $e . "%'";}, $words)) . " )";
         }
 
+        // Set Order by
+        $sql .= ' ORDER BY p.model ASC';
+
         // Set Limits
         $sql_limit = " LIMIT %s, %s ";
         if ($offset === null) {
@@ -195,9 +198,9 @@ class ModelFeCatalogProduct extends Model {
         return $result->rows;
     }
 
-    public function getByCrosscode($crosscode) {
+    public function getByCrosscode($search_text) {
         $this->load->model('fe/util/crosscode');
-        $crosscode = $this->model_fe_util_crosscode->normalize($crosscode);
+        $crosscode = $this->model_fe_util_crosscode->normalize($search_text);
         /*$sql = "SELECT * FROM " . DB_PREFIX . "product p
         LEFT JOIN " . DB_PREFIX . "product_to_crosscode ptc ON p.product_id = ptc.product_id
         LEFT JOIN " . DB_PREFIX . "product_crosscode pc ON ptc.crosscode_id = pc.product_crosscode_id
@@ -208,6 +211,18 @@ class ModelFeCatalogProduct extends Model {
         LEFT JOIN " . DB_PREFIX . "product_crosscode pc ON ptc.crosscode_id = pc.product_crosscode_id
         WHERE (p.model = '". $this->db->escape($crosscode) ."' OR pc.crosscode Like '%" . $this->db->escape($crosscode) . "%') AND p.status = 1";
         $result = $this->db->query($sql);
+
+        $sql = "SELECT * FROM " . DB_PREFIX . "product p
+        LEFT JOIN " . DB_PREFIX . "product_to_crosscode ptc ON p.product_id = ptc.product_id
+        LEFT JOIN " . DB_PREFIX . "product_crosscode pc ON ptc.crosscode_id = pc.product_crosscode_id
+        WHERE (p.model = '". $this->db->escape($search_text) ."' AND pc.crosscode = '". $this->db->escape($crosscode) ."') AND p.status = 1";
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $firstRow = $query->row;
+            array_unshift($result->rows, $firstRow);
+        }
+
         return $result->rows;
     }
 

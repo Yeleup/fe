@@ -65,6 +65,9 @@ class ControllerFePagesListDetails extends Controller {
 		$data['products'] = [];
 
 		foreach ($products as $product) {
+            if (!isset($product['product_id'])) {
+                print_r($products);die;
+            }
 			$product = $this->model_fe_catalog_product->getFullById($product['product_id']);
 			if ($product) {
 				$data['products'][] = $product;
@@ -129,9 +132,9 @@ class ControllerFePagesListDetails extends Controller {
         $data['client_category_id'] = $client_category_id;
 		//************************************************************************************************** */
 
-        $data['search'] = '';
+        $data['search_text'] = '';
         if (isset($this->request->get['search'])) {
-            $data['search'] = $this->request->get['search'];
+            $data['search_text'] = $this->request->get['search'];
         }
 
 		$data['product_search'] = $this->load->view('fe/includes/common/search_bar', $data);

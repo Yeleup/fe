@@ -12,6 +12,13 @@ class ControllerFePagesDetails extends Controller {
 
 		$data['product'] = $product;
 
+        $data['search_text'] = '';
+        if (isset($this->request->get['search'])) {
+            $data['search_text'] = $this->request->get['search'];
+        }
+
+        $data['product_search'] = $this->load->view('fe/includes/common/search_bar', $data);
+
 		$data['footer'] = $this->load->controller('fe/common/footer');
 		$data['header'] = $this->load->controller('fe/common/header');
 
