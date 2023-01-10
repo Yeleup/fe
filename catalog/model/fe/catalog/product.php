@@ -149,7 +149,7 @@ class ModelFeCatalogProduct extends Model {
         }
 
         // Set Order by
-        $sql .= ' ORDER BY p.model ASC';
+        $sql .= ' ORDER BY p.quantity DESC, p.model ASC';
 
         // Set Limits
         $sql_limit = " LIMIT %s, %s ";

@@ -94,12 +94,13 @@
                                                 </span>
                                                 <span class="mx-2">
                                                     {% if product['quantity'] > 0 %}
-                                                        <img src="image/catalog/fe/pages/goods/icon_check.svg" alt="">
+                                                        <span class="text-success" style="font-weight: bold">
                                                         {% if product['quantity'] < 10 %}
                                                         В наличии ({{ product['quantity'] }})
                                                         {% else %}
                                                         В наличии (10+)
                                                         {% endif %}
+                                                        </span>
                                                     {% else %}
                                                         <span class="text-danger" style="font-weight: 800; font-size: 1.3em">Не имеется на складе.</span>
                                                     {% endif %}
