@@ -12,6 +12,12 @@ class ModelFeCustomerCallback extends Model {
             return false;
         }
 
+        $this->load->model('fe/customer/fe_customer');
+        $feCustomer = $this->model_fe_customer_fe_customer->getByCustomerId($customer_id);
+
+        $this->load->model('fe/customer/reg_type');
+        $regType = $this->model_fe_customer_reg_type->getById($feCustomer['reg_type']);
+
         $sql = "INSERT INTO {$prefix}fe_callback SET
             name = '$name',
             phone = '$phone',
@@ -22,7 +28,7 @@ class ModelFeCustomerCallback extends Model {
         $id = $this->db->getLastId();
 
         $this->load->model('fe/util/telegram');
-        $this->model_fe_util_telegram->sendNotifications("Обратный Звонок: $name $phone");
+        $this->model_fe_util_telegram->sendNotifications("Обратный Звонок: $name $phone [{$regType['name_display']}]" );
 
         return $id;
     }

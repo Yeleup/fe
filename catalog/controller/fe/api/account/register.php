@@ -19,9 +19,15 @@ class ControllerFeApiAccountRegister extends Controller {
                 'address' => ($this->request->post['address'] ?? null),
             ]);
 
+            if ($this->request->post['reg_type'] == 'wholesale') {
+                $regTypeName = 'Оптовый клиент';
+            } else {
+                $regTypeName = 'Розничный клиент';
+            }
+
             if ($fe_customer_result) {
                 $this->load->model('fe/util/telegram');
-                $this->model_fe_util_telegram->sendNotifications("Пользователь {$this->request->post['email']} был зарегистрирован.");
+                $this->model_fe_util_telegram->sendNotifications("Пользователь {$this->request->post['email']} был зарегистрирован. [{$regTypeName}]");
             }
 
             // Clear any previous login attempts for unregistered accounts.
