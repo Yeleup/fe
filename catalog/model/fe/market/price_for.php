@@ -25,7 +25,7 @@ class ModelFeMarketPriceFor extends Model {
             WHERE
             	pp.product_id = '$product_id'
             AND pbc.client_category_id = '$client_category_id'
-            AND pbc.category_id = '$category_id'";
+            AND pbc.category_id = '$category_id' ORDER BY pp.product_price_id DESC";
         $result = $this->db->query($sql);
         return $result->row;
     }
