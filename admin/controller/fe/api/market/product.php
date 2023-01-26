@@ -108,44 +108,37 @@ class ControllerFeApiMarketProduct extends Controller {
             }
 
             // Image
-            $dir = 'http://87.255.197.177:22000/'. $product->guid;
-            $html = @file_get_contents($dir);
+            $fileGetContents = 'http://87.255.197.177:35000/api/image/'. $product->guid;
 
-            if ($html === FALSE) {
-                $isDir = false;
-            } else {
-                $isDir = true;
-            }
+            $countImages = json_decode(@file_get_contents($fileGetContents), true);
 
-            if ($isDir) {
-                $count = preg_match_all('/<td><a href="([^"]+)">[^<]*<\/a><\/td>/i', $html, $files);
-                for ($i = 1; $i < $count; $i++) {
-                    $image = 'catalog/products/'. $product->guid . '/' . $files[1][$i];
+            for ($i = 1; $i <= $countImages['count']; $i++) {
+                $format = 'jpg';
+                $image = 'catalog/products/'. $product->guid . '/' . $i . '.' . $format;
 
-                    if ($i == 1) {
-                        $this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($image) . "' WHERE product_id = '" . (int)$product_id . "'");
+                if ($i == 1) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($image) . "' WHERE product_id = '" . (int)$product_id . "'");
 
-                        $ch = curl_init('http://87.255.197.177:22000/'. $product->guid . '/' . $files[1][$i]);
-                        $fp = fopen($imagePath . '/' . $files[1][$i], 'wb');
+                    $ch = curl_init('http://87.255.197.177:35000/api/image/'. $product->guid . '/' . $format . '/' . $i);
+                    $fp = fopen($imagePath . '/' . $i . '.' . $format, 'wb');
+                    curl_setopt($ch, CURLOPT_FILE, $fp);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_exec($ch);
+                    curl_close($ch);
+                    fclose($fp);
+                } else {
+                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "' AND image = '" . $image . "'");
+
+                    if (!$query->num_rows) {
+                        $ch = curl_init('http://87.255.197.177:35000/api/image/'. $product->guid . '/' . $format . '/' . $i);
+                        $fp = fopen($imagePath . '/' . $i . '.' . $format, 'wb');
                         curl_setopt($ch, CURLOPT_FILE, $fp);
                         curl_setopt($ch, CURLOPT_HEADER, 0);
                         curl_exec($ch);
                         curl_close($ch);
                         fclose($fp);
-                    } else {
-                        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "' AND image = '" . $image . "'");
 
-                        if (!$query->num_rows) {
-                            $ch = curl_init('http://87.255.197.177:22000/'. $product->guid . '/' . $files[1][$i]);
-                            $fp = fopen($imagePath . '/' . $files[1][$i], 'wb');
-                            curl_setopt($ch, CURLOPT_FILE, $fp);
-                            curl_setopt($ch, CURLOPT_HEADER, 0);
-                            curl_exec($ch);
-                            curl_close($ch);
-                            fclose($fp);
-
-                            $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($image) . "', sort_order = '" . $i . "'");
-                        }
+                        $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($image) . "', sort_order = '" . $i . "'");
                     }
                 }
             }
