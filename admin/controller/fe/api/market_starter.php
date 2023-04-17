@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 class ControllerFeApiMarketStarter extends Controller {
     protected $json = [
         'code' => 200,
@@ -169,5 +172,47 @@ class ControllerFeApiMarketStarter extends Controller {
         }
         $this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($this->json));
+    }
+
+    public function productDay() {
+        $curl = curl_init();
+
+        $url = 'http://87.255.197.177:5581/torgupr/hs/market/productDay';
+        $username = 'admin';
+            $password = '4217777';
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $json = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response);
+
+        $data = json_decode($json,true);
+
+        if (!$data['message']) {
+            $data = json_decode('{"code": 200, "message": [{"id": "80fd1572-d247-11e1-8039-000423d696ae", "percent": 0 }]}',true);
+        }
+
+        $this->load->model('fe/catalog/product');
+        $product = $this->model_fe_catalog_product->getProductByGuid($data['message'][0]['id']);
+
+        $this->load->model('setting/module');
+
+        $post = array(
+            'name' => 'ТОВАР ДНЯ!',
+            'product_name' => '',
+            'product' => [
+                0 => $product['product_id']
+            ],
+            'limit' => 1,
+            'width' => $data['message'][0]['percent'],
+            'height' => 200,
+            'status' => 1,
+        );
+
+        $this->model_setting_module->editModule(28, $post);
     }
 }

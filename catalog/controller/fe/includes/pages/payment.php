@@ -18,6 +18,8 @@ class ControllerFeIncludesPagesPayment extends Controller {
 
 		$data['showPaymentCard'] = true;
 
+        $data['showPaymentKaspi'] = true;
+
 		return $this->load->view('fe/includes/pages/payment', $data);
 	}
 }

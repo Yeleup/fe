@@ -99,24 +99,77 @@
             </div>
             {% endif %}
 
-            <div class="container mt-5 fe-subcat-container">
-                <div class="text-center">
-                    <h4 class="text-uppercase pt-5 pb-3">Дополнительные товары</h4>
-                </div>
-
-                <div class="row row-cols-1 row-cols-lg-5 justify-content-center p-2" style="font-size: .8em; border-radius: 20px;background: rgba(255, 255, 255, 0.8);">
-                    {% for subcat in prod_subcat %}
-                    <div class="col text-center my-auto">
-                        <a href="{{ subcat.link }}" class="btn">
-                            <span class="text-uppercase">
-                                <img height="40px" src="image/catalog/fe/static/home/cat_icons/{{ loop.index }}.png" alt="">
-                                {{ subcat['name'] }}
-                            </span>
-                        </a>
+            <div class="jumbotron vertical-center">
+                <div class="container">
+                    <div class="row justify-content-center p-20">
+                        <div class="col-7 my-auto">
+                            <!-- --------------------------------------------------------------------------------------------------------------------------- -->
+                            <div class="text-left" style="color: #0f4799;">
+                                <h4 class="text-uppercase pt-5 pb-3 fw-bold">Дополнительные товары</h4>
+                            </div>
+                            <div class="row">
+                                <div class="row" style="font-size: .8em; border-radius: 20px; background: #0f4799; font-weight: bold;">
+                                    <div class="row justify-content-center p-2">
+                                        {% for key, subcat in prod_subcat %}
+                                            {% if key not in [3, 4] %}
+                                            <div class="col text-center my-auto">
+                                                <a href="{{ subcat.link }}" class="btn">
+                                                <span class="text-uppercase" style="color: #fff;">
+                                                    <img height="40px" src="image/catalog/fe/static/home/cat_icons/{{ loop.index }}.png" style="filter: invert(1);" alt=""/> {{ subcat['name'] }}
+                                                </span>
+                                                </a>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="row justify-content-center p-2">
+                                        {% for key, subcat in prod_subcat %}
+                                            {% if key in [3, 4] %}
+                                                <div class="col-6 text-center my-auto">
+                                                    <a href="{{ subcat.link }}" class="btn">
+                                                        <span class="text-uppercase" style="color: #fff;">
+                                                            <img height="40px" src="image/catalog/fe/static/home/cat_icons/{{ loop.index }}.png" style="filter: invert(1);" alt="">{{ subcat['name'] }}
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- --------------------------------------------------------------------------------------------------------------------------- -->
+                        </div>
+                        <div class="col-5 my-auto">
+                            <div class="row" style="margin-top: 100px;">
+                                <div class="col=12">
+                                    <div class="p-2 m-2">
+                                        {{ product_day }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
+
+            {#            <div class="container mt-5 fe-subcat-container">#}
+{#                <div class="text-center">#}
+{#                    <h4 class="text-uppercase pt-5 pb-3">Дополнительные товары</h4>#}
+{#                </div>#}
+
+{#                <div class="row row-cols-1 row-cols-lg-5 justify-content-center p-2" style="font-size: .8em; border-radius: 20px;background: rgba(255, 255, 255, 0.8);">#}
+{#                    {% for subcat in prod_subcat %}#}
+{#                    <div class="col text-center my-auto">#}
+{#                        <a href="{{ subcat.link }}" class="btn">#}
+{#                            <span class="text-uppercase">#}
+{#                                <img height="40px" src="image/catalog/fe/static/home/cat_icons/{{ loop.index }}.png" alt="">#}
+{#                                {{ subcat['name'] }}#}
+{#                            </span>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
 
             <div>
                 <br><br><br>

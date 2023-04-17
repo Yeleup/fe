@@ -28,6 +28,21 @@
                         <b>
                             {{ product.name }}
                         </b>
+                        {% set left_infos = [
+                            {top: 'Производитель:', bottom: product.brand_name},
+                            {top: 'Номер детали:', bottom: product.model},
+                            {top: 'Название служебное:', bottom: product.name},
+                        ] %}
+                        {% for left_info in left_infos %}
+                            <div class="my-2">
+                                <div>
+                                    <span class="text-muted">{{ left_info.top }}</span>
+                                </div>
+                                <div>
+                                    <b>{{ left_info.bottom }}</b>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                     <div class="col">
                         <div class="row">
@@ -41,10 +56,9 @@
                                     <span class="text-danger" style="font-weight: 800; font-size: 1.3em">Не имеется на складе.</span>
                                 {% endif %}
                             </div>
-                            <div class="col"></div>
                             <div class="col">
                                 {% if product.image %}
-                                    <img width="200px" src="image/{{ product.image }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+                                    <img width="400px" src="image/{{ product.image }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
                                 {% endif %}
                             </div>
                         </div>
@@ -52,23 +66,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">
-                        {% set left_infos = [
-                            {top: 'Производитель:', bottom: product.brand_name},
-                            {top: 'Номер детали:', bottom: product.model},
-                            {top: 'Название служебное:', bottom: product.name},
-                        ] %}
-                        {% for left_info in left_infos %}
-                        <div class="my-2">
-                            <div>
-                                <span class="text-muted">{{ left_info.top }}</span>
-                            </div>
-                            <div>
-                                <b>{{ left_info.bottom }}</b>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
+                    <div class="col d-none d-sm-block"></div>
 
                     <div class="col">
                         <div class="row align-items-end h-100 gx-0">

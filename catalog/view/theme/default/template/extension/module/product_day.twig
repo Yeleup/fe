@@ -1,42 +1,37 @@
-<h3>{{ heading_title }}</h3>
-<div class="row">
- {% for product in products %}
-  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
-    <div class="product-thumb transition">
-      <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
-      <div class="caption">
-        <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-        <p>{{ product.description }}</p>
-        {% if product.rating %}
-        <div class="rating">
-          {% for i in 5 %}
-          {% if product.rating < i %}
-          <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-          {% else %}
-          <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-          {% endif %}
-          {% endfor %}
+<div id="banner">
+    <a href="{{ products[0].href }}" title="{{ products[0].name }}" style="text-decoration: none;">
+        <div style="width: 460px; height: 150px; border: solid; box-shadow: 3px 0 3px 0 #0d6efd; border-radius: 12px; background: #fff; box-shadow: 0px 0px 25px 25px #fff;">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row" >
+                        <div class="col-12" style="color: #0f4799; font-size: 40px; margin-left: 10px; font-weight: bold;">
+                            {{ name }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if products[0].special %}
+                        <div class="col-6" style="color: #0f4799; font-size: 25px; font-weight: bold; margin-left: 10px;">
+                            {{ products[0].special }}
+                        </div>
+                        <div class="col-5" style="color: gray; font-size: 20px; margin-top: 5px; font-weight: bold; text-decoration: line-through;">
+                            {{ products[0].price }}
+                        </div>
+                        {% else %}
+                            <div class="col-6" style="color: #0f4799; font-size: 25px; font-weight: bold; margin-left: 10px;">
+                                {{ products[0].price }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="color: gray; font-size: 20px; margin-left: 10px;">
+                            {{ products[0].name }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <img style="width: 250px; height: 250px; margin-left: -60px; margin-top: -60px;" src="/image/parts.png">
+                </div>
+            </div>
         </div>
-        {% endif %}
-        {% if product.price %}
-        <p class="price">
-          {% if not product.special %}
-          {{ product.price }}
-          {% else %}
-          <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-          {% endif %}
-          {% if product.tax %}
-          <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-          {% endif %}
-        </p>
-        {% endif %}
-      </div>
-      <div class="button-group">
-        <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+    </a>
 </div>

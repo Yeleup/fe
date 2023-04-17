@@ -39,12 +39,20 @@ class ControllerFeCommonHome extends Controller {
 		$data['customer_id'] = $this->session->data['customer_id'] ?? 0;
 		$data['logged'] = $this->customer->isLogged();
 
+        $data['route'] = $this->request->get['route'] ?? 'fe/common/home';
+
         $data['search_text'] = (isset($this->request->get['search']) ? $this->request->get['search'] : '');
 		$data['search_bar'] = $this->load->view('fe/includes/common/search_bar', $data);
 		$data['search'] = $this->load->controller('fe/includes/common/search');
 		//$data['search_laximo'] = $this->load->controller('fe/includes/common/search_laximo');
 		$data['footer'] = $this->load->controller('fe/common/footer');
 		$data['header'] = $this->load->controller('fe/common/header');
+
+        $this->load->model('setting/module');
+        $product_day_module_id = 28;
+        $setting_info = $this->model_setting_module->getModule($product_day_module_id);
+
+        $data['product_day'] = $this->load->controller('extension/module/product_day', $setting_info);
 
 		$this->response->setOutput($this->load->view('fe/common/home', $data));
 	}

@@ -21,6 +21,7 @@ class ControllerFeApiMarketProduct extends Controller {
             $result = $client->get('/market/product/get/list');
         }
 
+
         $this->load->model('fe/market/crosscode');
 
         foreach ($result->message as $product) {

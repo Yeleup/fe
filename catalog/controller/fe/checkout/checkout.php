@@ -158,7 +158,12 @@ class ControllerFeCheckoutCheckout extends Controller {
 
         $data['link_home'] = $this->url->link('fe/common/home', '', true);
         $data['payment_option'] = $payment_option;
-        $data['payment_method'] = $this->load->controller('extension/payment/jetpay');
+
+        if ($payment_option == 'kaspi') {
+            $data['payment_method'] = $this->load->controller('extension/payment/kaspi');
+        } else {
+            $data['payment_method'] = $this->load->controller('extension/payment/jetpay');
+        }
 
         $this->session->data['payment_method']['code'] = $payment_option;
 

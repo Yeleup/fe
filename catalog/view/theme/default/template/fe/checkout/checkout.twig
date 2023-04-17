@@ -5,6 +5,8 @@
     <div class="container m-5">
         {% if payment_option == "jetpay" %}
             {{ payment_method }}
+        {% elseif payment_option == "kaspi" %}
+            {{ payment_method }}
         {% else %}
             <h1 class="m-5">
                 Заказ #{{ order_id }} был принят.
